@@ -1,0 +1,144 @@
+{
+    "chocolate": {
+        "toblerone-milk-chocolate-bar": {
+            "name": "Toblerone Milk Chocolate Bar",
+            "weight": 100,
+            "image": "/images/toblerone-milk-chocolate-bar.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 10,
+            "brand": "Toblerone",
+            "country": "Switzerland",
+            "description": "path",
+            "price": 2.75,
+            "numberOfAvailableItems": 100
+        },
+        "milka-chocolate-tablet-with-broken-hazelnuts": {
+            "name": "Milka Chocolate Tablet With Broken Hazelnuts",
+            "weight": 100,
+            "image": "/images/milk-chocolate-tablet-with-broken-hazelnuts.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 15,
+            "brand": "Milka",
+            "country": "Switzerland",
+            "description": "path",
+            "price": 2.4,
+            "numberOfAvailableItems": 15
+        },
+        "ritter-sport-alpine-milk-chocolate_bar": {
+            "name": "Ritter Sport Alpine Milk Chocolate Bar",
+            "weight": 100,
+            "image": "/images/ritter-sport-alpine-milk-chocolate-bar.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 5,
+            "brand": "Ritter Sport",
+            "country": "Germany",
+            "description": "path",
+            "price": 2.4,
+            "numberOfAvailableItems": 30
+        },
+        "ritter-sport-alpine-milk-chocolate_bar2": {
+            "name": "Ritter Sport Alpine Milk Chocolate Bar",
+            "weight": 100,
+            "image": "/images/ritter-sport-alpine-milk-chocolate-bar.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 5,
+            "brand": "Ritter Sport",
+            "country": "Germany",
+            "description": "path",
+            "price": 2.4,
+            "numberOfAvailableItems": 0
+        },
+        "ritter-sport-alpine-milk-chocolate_bar3": {
+            "name": "Ritter Sport Alpine Milk Chocolate Bar",
+            "weight": 100,
+            "image": "/images/ritter-sport-alpine-milk-chocolate-bar.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 5,
+            "brand": "Ritter Sport",
+            "country": "Germany",
+            "description": "path",
+            "price": 10,
+            "numberOfAvailableItems": 10
+        },
+        "ritter-sport-alpine-milk-chocolate_bar4": {
+            "name": "Ritter Sport Alpine Milk Chocolate Bar",
+            "weight": 100,
+            "image": "/images/ritter-sport-alpine-milk-chocolate-bar.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 5,
+            "brand": "Ritter Sport",
+            "country": "Germany",
+            "description": "path",
+            "price": 2.4,
+            "numberOfAvailableItems": 0
+        },
+        "aaaa": {
+            "name": "AAAAAA",
+            "weight": 1000,
+            "image": "/images/ritter-sport-alpine-milk-chocolate-bar.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 500,
+            "brand": "Ritter Sport",
+            "country": "Germany",
+            "description": "path",
+            "price": 2.4,
+            "numberOfAvailableItems": 38
+        }
+    },
+    "cookies": {
+        "oreo-caramel-coconut-flavored-creme-chocolate-sandwich-cookies": {
+            "name": "OREO Caramel Coconut Flavored Creme Chocolate Sandwich Cookies",
+            "weight": 480,
+            "image": "/images/oreo-caramel-coconut-flavored creme-chocolate-sandwich-cookies.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 10,
+            "brand": "Oreo",
+            "country": "United States",
+            "description": "path",
+            "price": 10.65,
+            "numberOfAvailableItems": 100
+        }
+    },
+    "biscuits": {
+        "oreo-caramel-coconut-flavored-creme-chocolate-sandwich-cookies": {
+            "name": "OREO Caramel Coconut Flavored Creme Chocolate Sandwich Cookies",
+            "weight": 480,
+            "image": "/images/oreo-caramel-coconut-flavored creme-chocolate-sandwich-cookies.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 10,
+            "brand": "Oreo",
+            "country": "United States",
+            "description": "path",
+            "price": 10.65,
+            "numberOfAvailableItems": 100
+        }
+    },
+    "candies": {
+        "oreo-caramel-coconut-flavored-creme-chocolate-sandwich-cookies": {
+            "name": "OREO Caramel Coconut Flavored Creme Chocolate Sandwich Cookies",
+            "weight": 480,
+            "image": "/images/oreo-caramel-coconut-flavored creme-chocolate-sandwich-cookies.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 10,
+            "brand": "Oreo",
+            "country": "United States",
+            "description": "path",
+            "price": 10.65,
+            "numberOfAvailableItems": 100
+        }
+    },
+    "cakes": {
+        "oreo-caramel-coconut-flavored-creme-chocolate-sandwich-cookies": {
+            "name": "OREO Caramel Coconut Flavored Creme Chocolate Sandwich Cookies",
+            "weight": 480,
+            "image": "/images/oreo-caramel-coconut-flavored creme-chocolate-sandwich-cookies.png",
+            "packageQuantity": 1,
+            "numberOfSoldItems": 10,
+            "brand": "Oreo",
+            "country": "United States",
+            "description": "path",
+            "price": 10.65,
+            "numberOfAvailableItems": 100
+        }
+    }
+}

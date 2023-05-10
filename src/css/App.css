@@ -1,0 +1,40 @@
+ input[type=range]::-moz-range-thumb {
+     pointer-events: all;
+ }
+
+ input[type="range"] {
+     height: 1px;
+     position: absolute;
+     pointer-events: none;
+ }
+
+ .rightSlider {
+     height: 1px;
+     margin-top: -0.5px;
+ }
+
+
+ #leftSlider {
+     height: 0;
+     z-index: 1;
+ }
+
+ input[type="range"]::-moz-range-progress {
+     background-color: #999;
+ }
+
+ .rightSlider::-moz-range-track {
+     background-color: #999;
+ }
+
+ input[id="rightSlider"]::-moz-range-progress {
+     background-color: rgb(193, 86, 255)
+ }
+
+ input[type='range']::-moz-range-thumb {
+     background: #e7e7e7;
+     cursor: pointer;
+     height: 20px;
+     width: 20px;
+     border: 1px solid #c2c2c2;
+ }
