@@ -1,17 +1,10 @@
-import PageFunc from "./PagesFunc"
-
-enum ConfectioneryType {
-  Chocolate = "Chocolate",
-  Cookies = "Cookies",
-  Biscuits = "Biscuits",
-  Candies = "Candies",
-  Cakes = "Cakes"
-}
+import {Page} from "./PagesFunc"
+import { ConfectioneryType } from "../data/Enums";
 
 function Candies() {
 
   return (
-    PageFunc(ConfectioneryType.Candies)
+    Page(ConfectioneryType.Candies)
   )
 }
 

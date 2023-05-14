@@ -1,5 +1,6 @@
 import { Confectionery } from "./Confectionery"
 import { DeleteProducts, AppendProducts, currentType } from "./Products"
+import {FilterType, StockType} from "./Enums"
 
 class Filter {
     type: FilterType
@@ -12,18 +13,7 @@ class Filter {
 
 }
 
-enum FilterType {
-    Brand,
-    Country,
-    Quantity,
-    Weigth,
-    Availability
-}
 
-enum Stock {
-    In,
-    Out,
-}
 
 var typeOfFirst: FilterType
 
@@ -43,7 +33,7 @@ function SwitchElems(data: Array<Confectionery>, dataValue: any, type: FilterTyp
             var newData = data.filter((element) => element.weight === dataValue)
             break
         case FilterType.Availability:
-            if (dataValue === Stock.In) {
+            if (dataValue === StockType.In) {
                 newData = data.filter((element) => element.numberOfAvailableItems !== 0)
             }
             else {
@@ -75,4 +65,4 @@ function RefreshProductsGrid(data: Array<Confectionery>) {
     AppendProducts(data, currentType)
 }
 
-export { RefreshProductsGrid, FilterData, Filter, FilterType, Stock }
+export { RefreshProductsGrid, FilterData, Filter, FilterType, StockType }

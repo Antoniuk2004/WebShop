@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Slider from "./Slider"
-
+import {DropDownType} from "./Enums"
 
 interface DropdownItem {
     label: any
@@ -12,15 +12,12 @@ interface DropdownItem {
 interface DropdownProps {
     label: string
     number: number
-    type: Type
+    type: DropDownType
     items: DropdownItem[]
 }
 
 
-enum Type {
-    normal,
-    price
-}
+
 
 
 var checkVar: boolean
@@ -117,11 +114,11 @@ function Dropdown({ label, number, items, type }: DropdownProps) {
                 </span>
             </button>
             {isOpen && (
-                type === Type.normal ? NormalMenu() : <Slider />
+                type === DropDownType.normal ? NormalMenu() : <Slider />
             )}
         </div>
     )
 }
 
-export { Dropdown, Type, checkVar }
+export { Dropdown, DropDownType as Type, checkVar }
 export type { DropdownItem }

@@ -1,23 +1,32 @@
 import React from 'react';
 import * as Data from "../data/Data";
 import { Breadcrumbs } from "@material-tailwind/react";
-import * as Confectionery from "../data/Confectionery";
-import {Sort}from "../data/Sort"
+import {Confectionery} from "../data/Confectionery";
+import { Sort } from "../data/Sort"
 import { SideBar } from "../data/SideBar"
-import { SortProducts } from "../data/Products"
+import { ConfectioneryType } from "../data/Enums"
+import { SortProducts } from '../data/Products';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-enum ConfectioneryType {
-    Chocolate = "Chocolate",
-    Cookies = "Cookies",
-    Biscuits = "Biscuits",
-    Candies = "Candies",
-    Cakes = "Cakes"
+
+var locationVar: any
+var navigateVar: any
+
+function OpenProductPage(name: string, navigate: any, location: any) {
+
+    const newName = name.replaceAll(' ', '_').toLowerCase();
+    const newPath = `${location.pathname}/${newName}`;
+    navigate(newPath);
+
+    return null;
 }
 
 
-
 function Page(type: ConfectioneryType) {
-    var currentData: Array<Confectionery.Chocolate> = []
+    locationVar = useLocation();
+    navigateVar = useNavigate()
+
+    var currentData: Array<Confectionery> = []
     switch (type) {
         case ConfectioneryType.Chocolate:
             currentData = Sort(Data.arrOfChocolates, 0)
@@ -45,6 +54,7 @@ function Page(type: ConfectioneryType) {
         else available = true
         return
     }
+
     function AddImage(image: string) {
         var imgClassName
         if (available) {
@@ -57,9 +67,11 @@ function Page(type: ConfectioneryType) {
             alt="."
         />
     }
+    const location = useLocation();
+    const navigate = useNavigate();
 
     return (
-        <div className="grid-cols-1 container mx-auto">
+        <div className="body grid-cols-1 container mx-auto">
             <Breadcrumbs className='pb-6'>
                 <a href="/" className="text-xl pr-2 opacity-60">
                     <svg
@@ -90,14 +102,14 @@ function Page(type: ConfectioneryType) {
                     <div className="2xl:max-w-2sm sm:max-w-s">
                         <div id="products-content" className="products-content grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-3 gap-x-6 gap-y-10">
                             {currentData.map((product) => (
-                                <a className="group relative">
-                                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                                <button className="group relative" onClick={() => OpenProductPage(product.name, navigate, location)}>
+                                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-pink-100  xl:aspect-h-8 xl:aspect-w-7">
                                         {CheckIfAvailable(product.numberOfAvailableItems)}
                                         {AddImage(product.image)}
                                     </div>
                                     <h3 className="mt-4 text-sm text-gray-700 h-10">{product.name}</h3>
-                                    <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
-                                </a>
+                                    <p className="mt-1 text-lg font-medium text-gray-900">${product.price.toFixed(2)}</p>
+                                </button>
                             ))}
                         </div>
                     </div>
@@ -108,4 +120,4 @@ function Page(type: ConfectioneryType) {
     )
 }
 
-export default Page;
+export { Page, OpenProductPage, locationVar, navigateVar };

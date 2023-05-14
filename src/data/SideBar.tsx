@@ -1,7 +1,7 @@
 import { valHooks } from "jquery"
 import * as SideBarData from "../data/SidebarData"
 import * as Dropdown from "./Dropdown"
-import { Filter, FilterData, FilterType, RefreshProductsGrid, Stock } from "./Filter"
+import { Filter, FilterData, FilterType, RefreshProductsGrid, StockType } from "./Filter"
 import {Confectionery} from "./Confectionery"
 
 
@@ -84,8 +84,8 @@ function SideBar(currentData: any) {
                 label="Availability"
                 number={2}
                 items={[
-                    { label: "In stock", onClick: () => testFunc(Stock.In, FilterType.Availability) },
-                    { label: "Out of stock", onClick: () => testFunc(Stock.Out, FilterType.Availability) }
+                    { label: "In StockType", onClick: () => testFunc(StockType.In, FilterType.Availability) },
+                    { label: "Out of StockType", onClick: () => testFunc(StockType.Out, FilterType.Availability) }
                 ]}
                 type={Dropdown.Type.normal}
             />

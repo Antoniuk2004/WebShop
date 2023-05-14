@@ -1,20 +1,13 @@
-import PageFunc from "./PagesFunc"
-
-enum ConfectioneryType {
-  Chocolate = "Chocolate",
-  Cookies = "Cookies",
-  Biscuits = "Biscuits",
-  Candies = "Candies",
-  Cakes = "Cakes"
-}
+import {Page} from "./PagesFunc"
+import { ConfectioneryType } from "../data/Enums";
 
 function Chocolate() {
 
   return (
-    PageFunc(ConfectioneryType.Chocolate)
+    Page(ConfectioneryType.Chocolate)
   )
 }
 
 
 
-export default Chocolate;
+export default Chocolate
