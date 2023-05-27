@@ -1,4 +1,5 @@
 import { WrongPage } from "./WrongPage";
+import Breadcrumbs from "../data/Breadcrumbs";
 import { arrOfChocolates, arrOfCookies, arrOfBuiscuits, arrOfCandies, arrOfCakes } from "../data/Data"
 import { Confectionery } from "../data/Confectionery"
 import { ConfectioneryType } from "../data/Enums"
@@ -6,6 +7,7 @@ import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 import GetData from "../data/Desctiption";
 import Navbar from "../Navbar";
 import Cookies from 'js-cookie';
+import { useState } from "react";
 
 function CurrentPageLink() {
     function GetArrOfProductsOrMatchBoolean(value: any): { arrayOfProducts: Array<Confectionery>, matched: boolean } {
@@ -32,7 +34,12 @@ function CurrentPageLink() {
                 arrayOfProducts = arrOfCakes
                 matched = true
                 break
-            case "cart": matched = true
+            case "shopping_cart": 
+                matched = true 
+                break
+            case "checkout": 
+                matched = true
+                break
         }
         if (value == "") matched = true
         return { arrayOfProducts, matched }
@@ -89,26 +96,59 @@ function CurrentPageLink() {
         )
     }
 
-    function MakeButton(product: Confectionery) {
-        var availiableButton = "btn bg-purple-400 hover:bg-purple-500 w-full transition duration-300 rounded-xl text-2xl py-3 my-2 text-white"
+    function UpdateNumberOfProductsInCart() {
+        var numOfProducts = document.getElementById("num-of-products")
+        if (numOfProducts) {
+            var prevNum = Number(numOfProducts.textContent)
+            numOfProducts.textContent = `${prevNum + 1}`
+        }
+        const btn = document.getElementById('btn') as HTMLButtonElement | null;
+        if(btn){
+            btn.textContent = "In your cart"
+            btn.addEventListener('click', () => navigate("/shopping_cart"))
+        }
+    }
+
+    function MakeButton(product: Confectionery, productName: String) {
+        var arrOfCookies = document.cookie.split("; ")
+        var buttonCSS = "btn bg-purple-400 hover:bg-purple-500 w-full transition duration-300 rounded-xl text-2xl py-3 my-2 text-white"
+        for (let i = 0; i < arrOfCookies.length; i++) {
+            var element = arrOfCookies[i].split("=")
+            if (element[0] == productName) {
+                return (
+                    <button
+                        id="btn"
+                        onClick={() => navigate("/shopping_cart")}
+                        className={buttonCSS}>In your cart</button>
+                )
+            }
+        }
+
         if (product.numberOfAvailableItems !== 0) {
             return (
-                <button onClick={() => Cookies.set(productName, `${typeOfProduct}=1`)} className={availiableButton}>Add to Cart</button>
+                <button
+                    id="btn"
+                    onClick={() => {
+                        Cookies.set(productName, `${typeOfProduct}=1`)
+                        UpdateNumberOfProductsInCart()
+                    }
+                    }
+                    className={buttonCSS}>Add to Cart</button>
             )
         }
         else {
             return (
-                <button disabled className={`${availiableButton} opacity-75`}>Sold Out</button>
+                <button id="btn" disabled className={`${buttonCSS} opacity-75`}>Sold Out</button>
             )
         }
     }
 
-    function RenderProductPage(product: Confectionery) {
+    function RenderProductPage(product: Confectionery, productName: String) {
         return (
             <div className="web-page">
                 <Navbar />
                 <div className="container mx-auto">
-                    <h1>Home</h1>
+                    <Breadcrumbs location={location} />
                     <div className="Item product flex grid-cols-2 gap-x-10 py-10">
                         <div className="left-side basis-7/12 px-20 ">
                             <div className="image-contaiter bg-pink-100 rounded-3xl">
@@ -126,7 +166,7 @@ function CurrentPageLink() {
                             <div className="product-properties py-2 flex">
                                 {GetCharacteristics(product)}
                             </div>
-                            {MakeButton(product)}
+                            {MakeButton(product, productName)}
                         </div>
                     </div>
                 </div>
@@ -148,7 +188,7 @@ function CurrentPageLink() {
 
     for (let index = 0; index < arrayOfProducts.length; index++) {
         var formatedName = arrayOfProducts[index].name.toLocaleLowerCase().replaceAll(" ", "_")
-        if (formatedName == productName) return RenderProductPage(arrayOfProducts[index])
+        if (formatedName == productName) return RenderProductPage(arrayOfProducts[index], productName)
     }
 
     if (!matched) return (<WrongPage />)

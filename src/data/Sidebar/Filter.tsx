@@ -1,6 +1,6 @@
-import { Confectionery } from "./Confectionery"
-import { DeleteProducts, AppendProducts, currentType } from "./Products"
-import {FilterType, StockType} from "./Enums"
+import { Confectionery } from "../Confectionery"
+import { DeleteProducts, AppendProducts, currentType } from "../Products"
+import {FilterType, StockType} from "../Enums"
 
 class Filter {
     type: FilterType

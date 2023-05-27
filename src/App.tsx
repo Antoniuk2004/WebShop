@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Chocolate from "./pages/Chocolate";
@@ -8,25 +8,18 @@ import Biscuits from "./pages/Biscuits";
 import Candies from "./pages/Candies";
 import Cakes from "./pages/Cakes";
 import "./css/App.css";
-import ProductPage from "./pages/ProductPage";
-import Header from "./pages/Header";
-import Cart from "./pages/Cart";
+import ProductPage from "./pages/CurrentPageLink";
+import Header from "./data/Header";
+import Cart from "./pages/Shopping_cart";
 import { CookiesProvider } from "react-cookie";
+import Checkout from "./pages/Checkout";
 
-enum ConfectioneryType {
-  Chocolate = "Chocolate",
-  Cookies = "Cookies",
-  Biscuits = "Biscuits",
-  Candies = "Candies",
-  Cakes = "Cakes"
-}
 
-export default function App() {
-
+function App() {
   return (
     <CookiesProvider>
       <BrowserRouter>
-        <Header />
+        <Header/>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -35,13 +28,15 @@ export default function App() {
             <Route path="biscuits" element={<Biscuits />} />
             <Route path="candies" element={<Candies />} />
             <Route path="cakes" element={<Cakes />} />
-            <Route path="cart" element={<Cart />} />
+            <Route path="shopping_cart" element={<Cart />} />
+            <Route path="checkout" element = {<Checkout />}/>
           </Route>
         </Routes>
-        <ProductPage />
+        <ProductPage/>
       </BrowserRouter>
     </CookiesProvider>
   );
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
+export default App

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Slider from "./Slider"
-import {DropDownType} from "./Enums"
+import {DropDownType} from "../Enums"
 
 interface DropdownItem {
     label: any

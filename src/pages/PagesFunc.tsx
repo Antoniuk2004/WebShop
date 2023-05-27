@@ -1,9 +1,9 @@
 import React from 'react';
 import * as Data from "../data/Data";
-import { Breadcrumbs } from "@material-tailwind/react";
-import {Confectionery} from "../data/Confectionery";
+import Breadcrumbs from "../data/Breadcrumbs";
+import { Confectionery } from "../data/Confectionery";
 import { Sort } from "../data/Sort"
-import { SideBar } from "../data/SideBar"
+import { SideBar } from "../data/Sidebar/SideBar"
 import { ConfectioneryType } from "../data/Enums"
 import { SortProducts } from '../data/Products';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -69,22 +69,9 @@ function Page(type: ConfectioneryType) {
     }
     const location = useLocation();
     const navigate = useNavigate();
-
     return (
         <div className="body grid-cols-1 container mx-auto">
-            <Breadcrumbs className='pb-6'>
-                <a href="/" className="text-xl pr-2 opacity-60">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                    </svg>
-                </a>
-                <a className='text-xl pl-2' href="#">{type}</a>
-            </Breadcrumbs>
+            <Breadcrumbs location={location} />
             <h1 className="mb-6  text-3xl text-black">{type}</h1 >
             <div className="sort py-8 flex flex-row ">
                 <div className="basis-5/6">Settings</div>

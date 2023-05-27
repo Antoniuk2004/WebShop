@@ -1,6 +1,6 @@
 import { useState } from "react"
-import * as Products from "./Products"
-import * as Data from "../data/Data"
+import * as Products from "../Products"
+import * as Data from "../Data"
 
 function Slider() {
     var currentData = Data.arrOfChocolates

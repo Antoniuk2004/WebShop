@@ -1,5 +1,5 @@
 
-import * as Confectionery from "./Confectionery";
+import * as Confectionery from "../Confectionery";
 
 function GetArrOfBrands(currentData: Array<Confectionery.Chocolate>) {
     return Array.from(new Set(currentData.map(item => item.brand)))

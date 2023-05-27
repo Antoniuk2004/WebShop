@@ -6,13 +6,13 @@ import { ConfectioneryType } from "../data/Enums";
 import { Confectionery } from "../data/Confectionery";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faM, faMinus, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { privateDecrypt } from "crypto";
 import { MathSign } from "../data/Enums"
+import { useLocation, useNavigate} from 'react-router-dom';
 
 var items: Array<Array<string>>
 
 function Cart() {
-
+    const location = useLocation()
     function GetAllValuesInCookies() {
         var items = []
         if (document.cookie !== "") {
@@ -99,7 +99,7 @@ function Cart() {
     function RenderEmptyCart() {
         var pElem = document.createElement("p")
         pElem.textContent = "Your cart is currently empty."
-        pElem.className = "text-black opacity-70 px-3 text-lg py-2"
+        pElem.className = "text-black opacity-70  text-lg py-2"
         return (
             pElem
         )
@@ -123,10 +123,14 @@ function Cart() {
         var row = document.getElementById(`${product[0]}_row`)
         var index = GetIndexOfElement(product[0])
         items.splice(index, 1);
-        console.log(items);
         if (items.length === 0) ChangeCartTable()
         row?.remove()
         ChangeSubtotalPrice()
+        var numOfProducts = document.getElementById("num-of-products")
+        if (numOfProducts) {
+            var prevNum = Number(numOfProducts.textContent)
+            numOfProducts.textContent = `${prevNum - 1}`
+        }
     }
 
     function ChangeSubtotalPrice() {
@@ -222,8 +226,9 @@ function Cart() {
     }
 
     function RenderCart() {
+        var navigate = useNavigate()
         return (
-            <div className="cart px-3" id="cart-table">
+            <div className="cart" id="cart-table">
                 <div className="products-titles flex border-y-2 py-3 text-balck opacity-70 border-stone-100">
                     <div className="left-side basis-7/12">
                         <p>Product</p>
@@ -250,7 +255,7 @@ function Cart() {
                 <RenderSubtotalPrice />
                 <div className="btn-container flex justify-end">
                     <button
-                        onClick={() => null}
+                        onClick={() => navigate("/checkout")}
                         className="basis-4/12 btn bg-purple-400 mt-6 hover:bg-purple-500 transition duration-300 rounded-xl text-2xl py-3 my-2 text-white px-40">Check Out</button>
                 </div>
             </div>
@@ -259,14 +264,15 @@ function Cart() {
 
 
     items = GetAllValuesInCookies()
+    
     return (
         <div className="container mx-auto" id="cart">
-            <Breadcrumbs location="s" />
-            <p className="text-4xl uppercase font-semibold text-purple-400 py-2 px-3">
+            <Breadcrumbs location={location} />
+            <p className="text-4xl uppercase font-semibold text-purple-400 py-2">
                 Shopping cart
             </p>
             {items.length > 0 ? RenderCart() :
-                <p className="text-black opacity-70 px-3 text-lg py-2">Your cart is currently empty.</p>}
+                <p className="text-black opacity-70 text-lg py-2">Your cart is currently empty.</p>}
         </div>
     );
 }

@@ -1,8 +1,8 @@
 import { valHooks } from "jquery"
-import * as SideBarData from "../data/SidebarData"
+import * as SideBarData from "./SidebarData"
 import * as Dropdown from "./Dropdown"
 import { Filter, FilterData, FilterType, RefreshProductsGrid, StockType } from "./Filter"
-import {Confectionery} from "./Confectionery"
+import {Confectionery} from "../Confectionery"
 
 
 
