@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
     if (document.cookie !== ""){
         number = document.cookie.split(";").length
     }
-    console.log(document.cookie.split("; "))
     return (
         <header className="px-2 py-3 bg-white text-purple-400 text-2xl">
             <div className="header-contant container mx-auto grid grid-cols-3">

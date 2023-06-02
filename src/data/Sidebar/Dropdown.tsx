@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Slider from "./Slider"
-import {DropDownType} from "../Enums"
+import { DropDownType } from "../Enums"
 
 interface DropdownItem {
     label: any
@@ -16,12 +16,7 @@ interface DropdownProps {
     items: DropdownItem[]
 }
 
-
-
-
-
 var checkVar: boolean
-
 
 function Dropdown({ label, number, items, type }: DropdownProps) {
 
@@ -84,7 +79,7 @@ function Dropdown({ label, number, items, type }: DropdownProps) {
             </div>
         )
     }
-    
+
     return (
         <div className="">
             <button

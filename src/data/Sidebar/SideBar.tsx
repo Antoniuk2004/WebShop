@@ -85,7 +85,7 @@ function SideBar(currentData: any) {
                 number={2}
                 items={[
                     { label: "In StockType", onClick: () => testFunc(StockType.In, FilterType.Availability) },
-                    { label: "Out of StockType", onClick: () => testFunc(StockType.Out, FilterType.Availability) }
+                    { label: "Out of Stock", onClick: () => testFunc(StockType.Out, FilterType.Availability) }
                 ]}
                 type={Dropdown.Type.normal}
             />
