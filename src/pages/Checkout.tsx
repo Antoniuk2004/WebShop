@@ -76,9 +76,9 @@ function Checkout() {
 
         var isCorrect = checkIfCorrectlyInput()
         if (isCorrect) {
-            // sendDataToServer(order)
+            sendDataToServer(order)
 
-            // cleanCookies()
+            cleanCookies()
             alert("Your order is confirmed")
         }
     }
