@@ -1,4 +1,5 @@
 import { Confectionery } from "./Confectionery";
+import { Order } from "./Order";
 
 enum ConfectioneryType {
     Chocolate = "Chocolate",
@@ -21,21 +22,26 @@ enum FilterType {
     Availability
 }
 
+enum Arrow {
+    Up,
+    Down,
+    None
+}
+
 enum StockType {
     In,
     Out,
 }
 
-enum MathSign{
+enum MathSign {
     Plus,
     Minus
 }
 
-
 interface Props {
-    dataProp: Array<Confectionery>
-    onDataChange: (data: Array<Confectionery>) => void
+    dataProp: any
+    onDataChange: (data: any) => void
 }
 
-export { ConfectioneryType, DropDownType, FilterType, StockType, MathSign };
-export type { Props  };
+export { ConfectioneryType, DropDownType, FilterType, StockType, MathSign, Arrow };
+export type { Props };

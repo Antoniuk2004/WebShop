@@ -1,18 +1,24 @@
 class Order {
-    firstName: String
-    sescondName: String
-    phoneNumber: Number
-    adress: String
-    apartment: String
-    city: String
-    postalCode: Number
-    email: String
-    country: String
+    id: number
+    date: number
+    price: number
+    firstName: string
+    sescondName: string
+    phoneNumber: number
+    adress: string
+    apartment: string
+    city: string
+    postalCode: number
+    email: string
+    country: string
     items: Array<Item>
 
-    constructor(firstName: String, secondName: String, phoneNumber: Number,
-        adress: String, apartment: String, city: String, postalCode: Number,
-        email: String, country: String, items:Array<Item>) {
+    constructor(id:number, date:number, price:number, firstName: string, secondName: string, phoneNumber: number,
+        adress: string, apartment: string, city: string, postalCode: number,
+        email: string, country: string, items:Array<Item>) {
+        this.id = id
+        this.date = date
+        this.price = price
         this.firstName = firstName
         this.sescondName = secondName
         this.phoneNumber = phoneNumber
@@ -27,9 +33,9 @@ class Order {
 }
 
 interface Item{
-    name: String,
-    type: String,
-    quantity: Number
+    name: string,
+    type: string,
+    quantity: number
 }
 
 export {Order}

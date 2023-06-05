@@ -7,7 +7,6 @@ import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 import GetData from "../data/Desctiption";
 import Navbar from "../Navbar";
 import Cookies from 'js-cookie';
-import { useState } from "react";
 
 function CurrentPageLink() {
     function GetArrOfProductsOrMatchBoolean(value: any): { arrayOfProducts: Array<Confectionery>, matched: boolean } {
@@ -38,6 +37,9 @@ function CurrentPageLink() {
                 matched = true 
                 break
             case "checkout": 
+                matched = true
+                break
+            case "orders":
                 matched = true
                 break
         }

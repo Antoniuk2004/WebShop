@@ -6,7 +6,7 @@ import { arrOfChocolates, arrOfCookies, arrOfBuiscuits, arrOfCandies, arrOfCakes
 import { ConfectioneryType } from "../data/DataTypes"
 import { Confectionery } from "../data/Confectionery"
 import { Navigate, useNavigate } from "react-router"
-
+import ApiRequest from "../data/API"
 
 function Checkout() {
     var correctInputCSS = "input h-[52px] flex justify-between w-full rounded-lg border border-neutral-500 px-3 text-black text-opacity-70 rounded-lg w-full text-black text-opacity-70 border-2 focus:outline-none focus:ring-0 focus:border-purple-400"
@@ -68,10 +68,11 @@ function Checkout() {
             }
             items.push(item)
         })
+        var id = numOfOrders + 1
+        
+        const date = Date.now()
+        var order = new Order(id, date, totalPrice, firstName, secondName, Number(phoneNumber), adress, apartment, city, Number(postalCode), email, countryName, items)
 
-        var order = new Order(firstName, secondName, Number(phoneNumber), adress, apartment, city, Number(postalCode), email, countryName, items)
-
-        console.log(checkIfCorrectlyInput())
 
         var isCorrect = checkIfCorrectlyInput()
         if (isCorrect) {
@@ -140,7 +141,7 @@ function Checkout() {
         })
             .then(response => response.text())
             .then(data => {
-                console.log(data);
+
             })
             .catch(error => {
                 console.error(error);
@@ -167,10 +168,7 @@ function Checkout() {
 
 
     function renderProducts() {
-        var arrOfFormatedCookies = getArrOfCookies()
-        var arrOfConfectioneries: Array<Confectionery> = getArrOfarrOfarrOfConfectioneriesOfDifferentTypes(arrOfFormatedCookies)
-        var arrOfPrices = getArrOfPrices(arrOfFormatedCookies, arrOfConfectioneries)
-        
+
         return (
             <div className="list-of-products">
                 {arrOfConfectioneries.map((element, index) => (
@@ -194,7 +192,7 @@ function Checkout() {
                         Total
                     </div>
                     <div className="flex justify-end px-3">
-                        ${getSum(arrOfPrices).toFixed(2)}
+                        ${totalPrice.toFixed(2)}
                     </div>
                 </div>
             </div>
@@ -257,12 +255,19 @@ function Checkout() {
     }
 
 
+    const [numOfOrders, setNumOfOrders] = useState(0);
+
+    ApiRequest({ dataProp: numOfOrders, onDataChange: setNumOfOrders }, "numberOfOrders")
 
 
+    var arrOfFormatedCookies = getArrOfCookies()
+    var arrOfConfectioneries: Array<Confectionery> = getArrOfarrOfarrOfConfectioneriesOfDifferentTypes(arrOfFormatedCookies)
+    var arrOfPrices = getArrOfPrices(arrOfFormatedCookies, arrOfConfectioneries)
+    const totalPrice: number = Number(getSum(arrOfPrices).toFixed(2))
     var navigate = useNavigate()
     return (
         <div className="checkout container mx-auto py-5">
-            
+
             <div className="flex gap-5">
                 <div className="left-side grid grid-cols-1 gap-y-5 basis-8/12">
                     <div className="contact">
@@ -305,3 +310,8 @@ function Checkout() {
 }
 
 export default Checkout
+
+function calculatePrice(arrOfPrices: any) {
+
+    return 0
+}

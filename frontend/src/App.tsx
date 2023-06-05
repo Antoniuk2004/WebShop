@@ -12,6 +12,7 @@ import ProductPage from "./pages/CurrentPageLink";
 import Header from "./data/Header";
 import Cart from "./pages/Shopping_cart";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 
 
 function HeaderWithLocation() {
@@ -24,7 +25,7 @@ function HeaderWithLocation() {
 
   function Changebackground(style: string) {
     var body = document.getElementById("body")
-    if (body) body.style.backgroundImage= style
+    if (body) body.style.backgroundImage = style
   }
 
   if (location.pathname == "/") Changebackground("linear-gradient(to top, rgba(255,0,0,0), rgba(237,221,253))")
@@ -76,6 +77,7 @@ function App() {
           <Route path="cakes" element={<Cakes />} />
           <Route path="shopping_cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
       </Routes>
       <ProductPage />

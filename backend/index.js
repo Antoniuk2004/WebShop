@@ -1,34 +1,45 @@
-import express from "express";
-import bodyParser from "body-parser";
-import fs from 'fs';
-import cors from "cors"; // Import the cors middleware
+import express from 'express'
+import bodyParser from 'body-parser'
+import fs from 'fs'
+import cors from 'cors'
 
-const app = express();
-const port = 8800;
+const app = express()
+const port = 8800
 
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
-// Enable CORS middleware
-app.use(cors());
+app.use(cors())
 
-app.post('/api/data', (req, res) => { 
-    const jsonData = req.body;
-
-    // Read the existing data from the file
-    let existingData = [];
+app.get('/api/data', (req, res) => {
     if (fs.existsSync('data.json')) {
-        existingData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+        const data = JSON.parse(fs.readFileSync('data.json', 'utf8'))
+        res.json(data)
+    } else {
+        res.status(404).json({ error: 'Data not found' })
     }
+})
 
-    // Add the new data to the existing data array
-    existingData.push(jsonData);
+app.get('/api/numberOfOrders', (req, res) => {
+    if (fs.existsSync('data.json')) {
+        const data = JSON.parse(fs.readFileSync('data.json', 'utf8'))
+        res.json(Number(data[data.length - 1].id))
+    } else {
+        res.status(404).json({ error: 'Data not found' })
+    }
+})
 
-    // Write the updated data back to the file
-    fs.writeFileSync('data.json', JSON.stringify(existingData));
 
-    res.send('Data added successfully');
-});
+app.post('/api/data', (req, res) => {
+    const jsonData = req.body
+    let existingData = []
+    if (fs.existsSync('data.json')) {
+        existingData = JSON.parse(fs.readFileSync('data.json', 'utf8'))
+    }
+    existingData.push(jsonData)
+    fs.writeFileSync('data.json', JSON.stringify(existingData))
+    res.send('Data added successfully')
+})
 
 app.listen(port, () => {
-    console.log(`Connected to backend! Listening on port ${port}`);
-});
+    console.log(`Connected to backend! Listening on port ${port}`)
+})
