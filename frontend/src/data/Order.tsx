@@ -3,7 +3,7 @@ class Order {
     date: number
     price: number
     firstName: string
-    sescondName: string
+    secondName: string
     phoneNumber: number
     adress: string
     apartment: string
@@ -20,7 +20,7 @@ class Order {
         this.date = date
         this.price = price
         this.firstName = firstName
-        this.sescondName = secondName
+        this.secondName = secondName
         this.phoneNumber = phoneNumber
         this.adress = adress
         this.apartment = apartment
