@@ -1,70 +1,77 @@
 import * as SideBarData from "./SidebarData"
-import * as Dropdown from "./Dropdown"
-import { Filter, FilterData, FilterType, FilterPros, StockType } from "./Filter"
-import { Confectionery } from "../Confectionery"
+import Dropdown from "./Dropdown"
+import { FilterData, FilterType, StockType } from "./Filter"
 import Slider from "./Slider"
-import { useState } from "react"
 import { Props } from "../DataTypes"
+import * as Data from "../Data"
+import { useEffect, useState } from "react"
+import { Confectionery } from "../Confectionery"
+
+
+function SideBar(products: Props, arrOfFilterTypes: Props, originalData:Array<Confectionery>) {
+    
+
+    const [productsInDropdowns, setProductsInDropdowns] = useState(products.data)
+
+    // function doFilter(dataValue: any, type: FilterType) {
+    //     var newArrOfFilterTypes: Array<any> = arrOfFilterTypes.data
+    //     if (Dropdown.checkVar) {
+    //         newArrOfFilterTypes.push([dataValue, type])
+    //         arrOfFilterTypes.set(newArrOfFilterTypes)
+    //         var newData = FilterData(products.data, arrOfFilterTypes)
+    //         products.set(newData)
+    //     }
+    //     else {
+    //         newArrOfFilterTypes = removeElement(newArrOfFilterTypes, dataValue)
+    //         var newData = FilterData(originalData, arrOfFilterTypes)
+    //         products.set(newData)
+    //     }
+    //     return null
+    // }
+
+    useEffect(() => { 
+        products.set(productsInDropdowns)
+    }, [productsInDropdowns]);
+
+
+    
 
 
 
-function SideBar({ dataProp, onDataChange }: Props) {
-    var arrOfFilters: Array<Filter> = []
-    var arrOfBrands = SideBarData.GetArrOfBrands(dataProp)
-    var arrOfCountries = SideBarData.GetArrOfUniqueCountryNames(dataProp)
-    var arrOfPackageQuantities = SideBarData.GetArrOfPackageQuantities(dataProp)
-    var arrOfWeigthValues = SideBarData.GetArrOfUniqueWeigthValues(dataProp)
-    var numberOfAvailableProducts = SideBarData.GetNumberOfAvaliableProducts(dataProp)
-
-    var tempData: Array<Confectionery> = dataProp
-
-    function stockFunc(dataValue: any, type: FilterType) {
-        FilterData({dataProp, onDataChange, dataValue, type})
-        return null
-    }
 
 
-    function MakeArrayOfItems(arrOfLabels: any, filterType: FilterType) {
-        const arrOfItems: Dropdown.DropdownItem[] = []
-        arrOfLabels.forEach((element: Dropdown.DropdownItem) => {
-            arrOfItems.push({ label: `${element}`, onClick: () => stockFunc(element, filterType) })
+    function removeElement(newArrOfFilterTypes: Array<any>, dataValue: any) {
+        newArrOfFilterTypes.forEach((element, index) => {
+            if (element[0] === dataValue) {
+                newArrOfFilterTypes.splice(index, 1)
+                // return newArrOfFilterTypes
+            }
         })
-        return arrOfItems
+        return newArrOfFilterTypes
     }
 
+    const arrOfDropdowns = [
+        Dropdown("Brand", FilterType.Brand, { data: productsInDropdowns, set: setProductsInDropdowns }, arrOfFilterTypes),
+        Dropdown("Country", FilterType.Country, { data: productsInDropdowns, set: setProductsInDropdowns }, arrOfFilterTypes),
+        Dropdown("Quantity in the package", FilterType.Quantity, { data: productsInDropdowns, set: setProductsInDropdowns }, arrOfFilterTypes),
+        Dropdown("Weigth", FilterType.Weigth, { data: productsInDropdowns, set: setProductsInDropdowns }, arrOfFilterTypes),
+        Dropdown("Availability", FilterType.Availability, { data: productsInDropdowns, set: setProductsInDropdowns }, arrOfFilterTypes)
+    ]
 
     return (
+        // <div>
+        //     {productsInDropdowns.map((element: any) => (
+        //         <p>{element.name}</p>
+        //     ))}
+        //     <Slider data={originalData} set={setProductsInDropdowns} />
+        // </div>
         <div className="sidebar basis-1/6 text-sm">
-            <Dropdown.Dropdown
-                label="Brand"
-                number={arrOfBrands.length}
-                items={MakeArrayOfItems(arrOfBrands, FilterType.Brand)}
-            />
-            <Dropdown.Dropdown
-                label="Country"
-                number={arrOfCountries.length}
-                items={MakeArrayOfItems(arrOfCountries, FilterType.Country)}
-            />
-            <Dropdown.Dropdown
-                label="Quantity in the package"
-                number={arrOfPackageQuantities.length}
-                items={MakeArrayOfItems(arrOfPackageQuantities, FilterType.Quantity)}
-            />
-            <Dropdown.Dropdown
-                label="Weigth"
-                number={arrOfWeigthValues.length}
-                items={MakeArrayOfItems(arrOfWeigthValues, FilterType.Weigth)}
-            />
-            <Slider dataProp={dataProp} onDataChange={onDataChange} />
-
-            <Dropdown.Dropdown
-                label="Availability"
-                number={2}
-                items={[
-                    { label: "In Stock", onClick: () => stockFunc(StockType.In, FilterType.Availability) },
-                    { label: "Out of Stock", onClick: () => stockFunc(StockType.Out, FilterType.Availability) }
-                ]}
-            />
+            {arrOfDropdowns[0]}
+            {arrOfDropdowns[1]}
+            {arrOfDropdowns[2]}
+            {arrOfDropdowns[3]}
+            {Slider(productsInDropdowns , setProductsInDropdowns, arrOfFilterTypes, originalData)}
+            {arrOfDropdowns[4]}
         </div>
     )
 }

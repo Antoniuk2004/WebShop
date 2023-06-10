@@ -257,7 +257,7 @@ function Checkout() {
 
     const [numOfOrders, setNumOfOrders] = useState(0);
 
-    ApiRequest({ dataProp: numOfOrders, onDataChange: setNumOfOrders }, "numberOfOrders")
+    ApiRequest({ data: numOfOrders, set: setNumOfOrders }, "numberOfOrders")
 
 
     var arrOfFormatedCookies = getArrOfCookies()

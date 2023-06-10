@@ -9,7 +9,7 @@ function Orders() {
     const [arrOfOrders, setArrOfOrders] = useState(new Array<Order>);
     const arrOfTitles = ['Order ID', 'Date', 'Name', 'Total']
 
-    ApiRequest({ dataProp: arrOfOrders, onDataChange: setArrOfOrders }, "data")
+    ApiRequest({ data: arrOfOrders, set: setArrOfOrders }, "data")
 
     function convertDate(currentTimeStamp: number) {
         const currentDate = new Date(currentTimeStamp)

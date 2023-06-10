@@ -39,9 +39,10 @@ enum MathSign {
 }
 
 interface Props {
-    dataProp: any
-    onDataChange: (data: any) => void
+    data: any
+    set: (data: any) => void
 }
 
+
 export { ConfectioneryType, DropDownType, FilterType, StockType, MathSign, Arrow };
-export type { Props };
+export type { Props};

@@ -12,54 +12,42 @@ class Filter {
 
 }
 
-interface FilterPros {
-    dataProp: Array<Confectionery>
-    onDataChange: (data: Array<Confectionery>) => void
-    dataValue: any 
-    type: FilterType
-}
-
 
 
 var typeOfFirst: FilterType
 
-function SwitchElems(data: Array<Confectionery>, dataValue: any, type: FilterType) {
+function UseOneFilter(products: Array<Confectionery>, dataValue: any, type: FilterType) {
     var newData: Array<Confectionery> = []
     switch (type) {
         case FilterType.Brand:
-            newData = data.filter((element) => element.brand === dataValue)
+            newData = products.filter((element) => element.brand === dataValue)
             break
         case FilterType.Country:
-            newData = data.filter((element) => element.country === dataValue)
+            newData = products.filter((element) => element.country === dataValue)
             break
         case FilterType.Quantity:
-            newData = data.filter((element) => element.packageQuantity === dataValue)
+            newData = products.filter((element) => element.packageQuantity === dataValue)
             break
         case FilterType.Weigth:
-            var newData = data.filter((element) => element.weight === dataValue)
+            var newData = products.filter((element) => element.weight === dataValue)
             break
         case FilterType.Availability:
             if (dataValue === StockType.In) {
-                newData = data.filter((element) => element.numberOfAvailableItems !== 0)
+                newData = products.filter((element) => element.numberOfAvailableItems !== 0)
             }
             else {
-                newData = data.filter((element) => element.numberOfAvailableItems === 0)
+                newData = products.filter((element) => element.numberOfAvailableItems === 0)
             }
             break
     }
     return newData
 }
 
-function FilterData({dataProp, onDataChange, dataValue, type}: FilterPros) {
-    var newData: Array<Confectionery> = []
-    newData = SwitchElems(dataProp, dataValue, type)
-    onDataChange(newData)
-    return null
+function FilterData(products: Array<Confectionery>, arrOfFilterTypes: Props) {
+    arrOfFilterTypes.data.forEach((element: any, index: number) => {
+        products = UseOneFilter(products, element[0], element[1])
+    })
+    return products
 }
 
-function RefreshProductsGrid({ dataProp, onDataChange }: FilterPros) {
-    // SwitchElems(dataProp, filterType)
-}
-
-export { RefreshProductsGrid, FilterData, Filter, FilterType, StockType }
-export type { FilterPros }
+export { FilterData, Filter, FilterType, StockType }

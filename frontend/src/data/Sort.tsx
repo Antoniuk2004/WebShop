@@ -2,6 +2,13 @@ import { cloneElement } from "react";
 import { Confectionery } from "../data/Confectionery";
 
 
+
+function SortProducts(data: Array<Confectionery>, indexOfSort: number) {
+  data = Sort(data, indexOfSort)
+  return data
+}
+
+
 function Sort(data: Array<Confectionery>, indexOfSort: number) {
   switch (indexOfSort) {
     case 0:
@@ -81,4 +88,4 @@ function SortBySelling(data: Array<Confectionery>): Array<Confectionery> {
 
 
 
-export { Sort }
+export { Sort, SortProducts }

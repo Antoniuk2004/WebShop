@@ -2,17 +2,17 @@ import { useState } from 'react';
 import * as Data from "../data/Data";
 import Breadcrumbs from "../data/Breadcrumbs";
 import { Confectionery } from "../data/Confectionery";
-import { Sort } from "../data/Sort"
+import { Sort, SortProducts } from "../data/Sort"
 import { SideBar } from "../data/Sidebar/SideBar"
 import { ConfectioneryType } from "../data/DataTypes"
-import { SortProducts } from '../data/Products';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
 var locationVar: any
 var navigateVar: any
-var indexOfSort: number
 
 function OpenProductPage(name: string, navigate: any, location: any) {
 
@@ -25,24 +25,22 @@ function OpenProductPage(name: string, navigate: any, location: any) {
 
 
 function Page(type: ConfectioneryType) {
-
-
-    var currentData: Array<Confectionery> = []
+    var originalData: Array<Confectionery> = []
     switch (type) {
         case ConfectioneryType.Chocolate:
-            currentData = Sort(Data.arrOfChocolates, 0)
+            originalData = Sort(Data.arrOfChocolates, 0)
             break
         case ConfectioneryType.Cookies:
-            currentData = Sort(Data.arrOfCookies, 0)
+            originalData = Sort(Data.arrOfCookies, 0)
             break
         case ConfectioneryType.Biscuits:
-            currentData = Sort(Data.arrOfBuiscuits, 0)
+            originalData = Sort(Data.arrOfBuiscuits, 0)
             break
         case ConfectioneryType.Candies:
-            currentData = Sort(Data.arrOfCandies, 0)
+            originalData = Sort(Data.arrOfCandies, 0)
             break
         case ConfectioneryType.Cakes:
-            currentData = Sort(Data.arrOfCakes, 0)
+            originalData = Sort(Data.arrOfCakes, 0)
             break
     }
 
@@ -72,7 +70,7 @@ function Page(type: ConfectioneryType) {
 
 
     function sortData(index: number) {
-        indexOfSort = index
+        setIndexOfSort(index)
         var newData = SortProducts(dataProp, index)
         setDataProp(newData)
     }
@@ -99,17 +97,51 @@ function Page(type: ConfectioneryType) {
         setDataProp(newData);
     }
 
-    
+    function removeElement(index: any) {
+        var newArrOfFilterTypes = arrOfFilterTypes
+        newArrOfFilterTypes.splice(index, 1)
+        var anotherNewArrOfFilterTypes: any = []
+        newArrOfFilterTypes.forEach(element => {
+            anotherNewArrOfFilterTypes.push(element)
+        });
+        setArrOfFilterTypes(anotherNewArrOfFilterTypes)
+        return
+    }
+
+    function renderFilters() {
+        return (
+            <div className="flex items-center gap-x-2 content-start basis-5/6">
+                <div
+                    onClick={() => setArrOfFilterTypes([])}
+                    className="flex items-center px-4 py-1 gap-x-2 border-2 border-red-500 rounded-full cursor-pointer hover:bg-red-500 hover:bg-opacity-10">
+                    <p>Cancel</p>
+                </div>
+                {arrOfFilterTypes.map((element, index) => (
+                    <div
+                        onClick={() => removeElement(index)}
+                        className="flex items-center px-4 py-1 gap-x-2 border-2 rounded-full cursor-pointer hover:bg-red-500 hover:bg-opacity-10">
+                        <p>{element[0]}</p>
+                        <FontAwesomeIcon icon={faXmark} className='text-red-400' />
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+
     const location = useLocation()
     const navigate = useNavigate()
-    const [dataProp, setDataProp] = useState(currentData);
+    const [dataProp, setDataProp] = useState(originalData)
+    const [arrOfFilterTypes, setArrOfFilterTypes] = useState([])
+    const [indexOfSort, setIndexOfSort] = useState(0)
+
     return (
         <div className='body'>
             <div className="grid-cols-1 container mx-auto ">
                 <Breadcrumbs location={location} />
                 <h1 className="mb-6  text-3xl text-black">{type}</h1 >
-                <div className="sort py-8 flex flex-row ">
-                    <div className="basis-5/6">Settings</div>
+                <div className="sort py-8 flex justify-end">
+                    {arrOfFilterTypes.length !== 0 ? renderFilters() : null}
                     <select className="select basis-1/6 focus:ring-purple-500  focus:border-purple-500 ">
                         <option value="best-selling" onClick={() => sortData(0)}>Best Selling</option>
                         <option value="A-Z" onClick={() => sortData(1)}>Title, A-Z</option>
@@ -119,7 +151,12 @@ function Page(type: ConfectioneryType) {
                     </select>
                 </div>
                 <div className="catalog container mx-auto flex flex-row gap-7">
-                    <SideBar dataProp={currentData} onDataChange={handleDataChange} />
+                    {SideBar(
+                        { data: dataProp, set: handleDataChange },
+                        { data: arrOfFilterTypes, set: setArrOfFilterTypes },
+                        originalData
+                    )}
+
                     <div className="products grid grid-col-5 basis-5/6">
                         <div className="2xl:max-w-2sm sm:max-w-s">
                             <div id="products-content" className="products-content grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-3 gap-x-6 gap-y-10">

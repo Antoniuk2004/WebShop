@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Props } from "../DataTypes"
+import {arrOfChocolates} from "../Data"
+import { Confectionery } from "../Confectionery"
 
 
-
-
-function Slider({ dataProp, onDataChange }: Props) {
+function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, originalData:Array<Confectionery>) {
     const max: number = 25
     const [leftInputVal, setLeftInputVal] = useState(0)
     const [rigthInputVal, setRigthInputVal] = useState(max)
@@ -28,16 +28,16 @@ function Slider({ dataProp, onDataChange }: Props) {
 
     function changePrice() {
         const arrOfNewData = [];
-        if (dataProp) {
-          for (let index = 0; index < dataProp.length; index++) {
+        if (originalData) {
+          for (let index = 0; index < originalData.length; index++) {
             if (
-              dataProp[index].price >= leftVal &&
-              dataProp[index].price <= rightVal
+              originalData[index].price >= leftVal &&
+              originalData[index].price <= rightVal
             ) {
-              arrOfNewData.push(dataProp[index]);
+              arrOfNewData.push(originalData[index]);
             }
           }
-          onDataChange(arrOfNewData);
+          set(arrOfNewData);
         }
       }
 
