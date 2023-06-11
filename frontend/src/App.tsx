@@ -50,7 +50,7 @@ function HeaderWithLocation() {
 
 function CheckoutHeader(navigate: NavigateFunction) {
   return (
-    <div className="container mx-auto text-2xl py-4 text-purple-400">
+    <div className="container mx-auto text-2xl py-4 text-purple-400 px-10">
       <p className="logo cursor-pointer" onClick={() => navigate("/")}>World Of Sweets</p>
     </div>
   )

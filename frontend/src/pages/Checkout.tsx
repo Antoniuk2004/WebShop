@@ -82,7 +82,7 @@ function Checkout() {
             alert("Your order is confirmed")
         }
     }
-
+    
     function changeBorderColor(name: string) {
         var inputElement = document.getElementsByName(name)[0]
         inputElement.style.borderColor = "red";
@@ -93,43 +93,44 @@ function Checkout() {
         inputElement.style.borderColor = ""
     }
 
+    const regex: RegExp = /[a-zA-Z\s\{\}\!\@\#\$\%\^\&\*\(\)\\;\.\/\,\-\=\|\~\`\'\"\а-я\і\ї\є\ґ\]\[]/g
+
     function checkIfCorrectlyInput() {
         var isCorrect = true
-        if (Number.isNaN(Number(phoneNumber)) || phoneNumber == "") {
+        if (phoneNumber.match(regex) || phoneNumber === "") {
             changeBorderColor("phoneNumber")
             isCorrect = false
         }
-        if (Number.isNaN(Number(postalCode)) || postalCode == "") {
+        if (postalCode.match(regex) || postalCode === "") {
             changeBorderColor("postalCode")
             isCorrect = false
         }
-        if (email == "") {
+        if (email === "") {
             changeBorderColor("email")
             isCorrect = false
         }
-        if (firstName == "") {
+        if (firstName === "") {
             changeBorderColor("firstName")
             isCorrect = false
         }
-        if (secondName == "") {
+        if (secondName === "") {
             changeBorderColor("secondName")
             isCorrect = false
         }
-        if (adress == "") {
+        if (adress === "") {
             changeBorderColor("adress")
             isCorrect = false
         }
-        if (apartment == "") {
+        if (apartment === "") {
             changeBorderColor("apartment")
             isCorrect = false
         }
-        if (city == "") {
+        if (city === "") {
             changeBorderColor("city")
             isCorrect = false
         }
         return isCorrect
     }
-
 
     function sendDataToServer(data: any) {
         fetch('http://localhost:8800/api/data', {
@@ -266,7 +267,7 @@ function Checkout() {
     const totalPrice: number = Number(getSum(arrOfPrices).toFixed(2))
     var navigate = useNavigate()
     return (
-        <div className="checkout container mx-auto py-5">
+        <div className="checkout container mx-auto py-5 xl:px-10">
 
             <div className="flex gap-5">
                 <div className="left-side grid grid-cols-1 gap-y-5 basis-8/12">
@@ -310,8 +311,3 @@ function Checkout() {
 }
 
 export default Checkout
-
-function calculatePrice(arrOfPrices: any) {
-
-    return 0
-}

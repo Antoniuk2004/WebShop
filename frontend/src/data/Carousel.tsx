@@ -37,8 +37,8 @@ function Carousel({ images }: CarouselProps) {
   }
 
   return (
-    <div className='carousel container mx-auto drop-shadow-xl relative'>
-      <img className="fit-picture rounded-xl pointer-events-none" src={img} alt="."></img>
+    <div className='carousel container mx-auto drop-shadow-xl relative 2xl:w-7/12 xl:w-6/12'>
+      <img className="fit-picture rounded-xl pointer-events-none " src={img} alt="."></img>
       <div className='flex py-3'>
         <button className="basis-1/3 flex justify-start">
           <FontAwesomeIcon

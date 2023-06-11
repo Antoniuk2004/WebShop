@@ -3,10 +3,14 @@ import { Confectionery } from "../Confectionery";
 import { FilterType, Props } from "../DataTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { useLocation, useNavigate } from "react-router";
 
 function Dropdown(label: string, filterType: FilterType, products: Props, arrOfFilterTypes: Props) {
     const [isOpen, setIsOpen] = useState(true);
     const [arrOfLabels, setArrOfLabels] = useState(new Array);
+
+    const navigate = useNavigate()
+    const location = useLocation().pathname
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
@@ -19,7 +23,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
             case FilterType.Brand:
                 products.data.forEach((element: Confectionery, index: number) => {
                     var num = mapOfFilterTypes.get(element.brand)
-                    if (num != undefined) {
+                    if (num !== undefined) {
                         mapOfFilterTypes.set(element.brand, num += 1)
                     }
                     else {
@@ -31,7 +35,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
             case FilterType.Country:
                 products.data.forEach((element: Confectionery, index: number) => {
                     var num = mapOfFilterTypes.get(element.country)
-                    if (num != undefined) {
+                    if (num !== undefined) {
                         mapOfFilterTypes.set(element.country, num += 1)
                     }
                     else {
@@ -43,7 +47,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
             case FilterType.Quantity:
                 products.data.forEach((element: Confectionery, index: number) => {
                     var num = mapOfFilterTypes.get(element.packageQuantity)
-                    if (num != undefined) {
+                    if (num !== undefined) {
                         mapOfFilterTypes.set(element.packageQuantity, num += 1)
                     }
                     else {
@@ -79,11 +83,12 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                 })
                 var num = mapOfFilterTypes.get("Out of Stock")
                 if (num === 0) mapOfFilterTypes.delete("Out of Stock")
-                var num = mapOfFilterTypes.get("In Stock")
+                num = mapOfFilterTypes.get("In Stock")
                 if (num === 0) mapOfFilterTypes.delete("In Stock")
                 arrLabelsToInput = mergeArrays(mapOfFilterTypes)
                 break;
         }
+
         arrLabelsToInput = addFiltersToMap(arrLabelsToInput)
         setArrOfLabels(sortArrOfLabels(arrLabelsToInput));
     }, [products.data, filterType])
@@ -91,20 +96,21 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
     function addFiltersToMap(arrLabelsToInput: (string | number | boolean)[][]) {
         arrOfFilterTypes.data.forEach((element: Array<any>) => {
             if (filterType === element[1]) {
-                // console.log(element)
-                // console.log(arrLabelsToInput)
                 const index = findIndex(arrLabelsToInput, element[0])
-                console.log(index)
-                arrLabelsToInput[index][2] = true
+                try {
+                    arrLabelsToInput[index][2] = true
+                } catch (error) { 
+                    navigate(`/`)
+                }
             }
         })
         return arrLabelsToInput
     }
 
-    function findIndex(arrLabelsToInput: (string | number | boolean)[][], label:string){
+    function findIndex(arrLabelsToInput: (string | number | boolean)[][], label: string) {
         var indexOfLabel = -1
         arrLabelsToInput.forEach((element, index) => {
-            if(element[0] === label) indexOfLabel = index
+            if (element[0] === label) indexOfLabel = index
         })
         return indexOfLabel
     }
@@ -161,7 +167,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
             changeCheckboxValue(false)
             currentData.forEach((element: Array<any>) => {
 
-                if (element[0] != newFilterValue)
+                if (element[0] !== newFilterValue)
                     newData.push(element)
             })
         }
@@ -171,7 +177,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
     function checkIfContains(currentData: Array<any>, newFilterValue: string | number) {
         var contains = false
         currentData.forEach(element => {
-            if (element[0] == newFilterValue) contains = true
+            if (element[0] === newFilterValue) contains = true
         })
         return contains
     }

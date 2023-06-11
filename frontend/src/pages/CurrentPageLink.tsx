@@ -9,7 +9,7 @@ import Navbar from "../Navbar";
 import Cookies from 'js-cookie';
 
 function CurrentPageLink() {
-    function GetArrOfProductsOrMatchBoolean(value: any): { arrayOfProducts: Array<Confectionery>, matched: boolean } {
+    function GetArrOfProductsOrMatchBoolean(value: string): { arrayOfProducts: Array<Confectionery>, matched: boolean } {
         var arrayOfProducts: Array<Confectionery> = []
         var matched = false
         switch (value.toLowerCase()) {
@@ -43,7 +43,7 @@ function CurrentPageLink() {
                 matched = true
                 break
         }
-        if (value == "") matched = true
+        if (value === "") matched = true
         return { arrayOfProducts, matched }
     }
 
@@ -116,7 +116,7 @@ function CurrentPageLink() {
         var buttonCSS = "btn bg-purple-400 hover:bg-purple-500 w-full transition duration-300 rounded-xl text-2xl py-3 my-2 text-white"
         for (let i = 0; i < arrOfCookies.length; i++) {
             var element = arrOfCookies[i].split("=")
-            if (element[0] == productName) {
+            if (element[0] === productName) {
                 return (
                     <button
                         id="btn"
@@ -149,7 +149,7 @@ function CurrentPageLink() {
         return (
             <div className="web-page">
                 <Navbar />
-                <div className="container mx-auto">
+                <div className="container mx-auto xl:px-10">
                     <Breadcrumbs location={location} />
                     <div className="Item product flex grid-cols-2 gap-x-10 py-10">
                         <div className="left-side basis-7/12 px-20 ">
@@ -190,7 +190,7 @@ function CurrentPageLink() {
 
     for (let index = 0; index < arrayOfProducts.length; index++) {
         var formatedName = arrayOfProducts[index].name.toLocaleLowerCase().replaceAll(" ", "_")
-        if (formatedName == productName) return RenderProductPage(arrayOfProducts[index], productName)
+        if (formatedName === productName) return RenderProductPage(arrayOfProducts[index], productName)
     }
 
     if (!matched) return (<WrongPage />)

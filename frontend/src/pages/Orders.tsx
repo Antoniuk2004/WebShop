@@ -91,81 +91,83 @@ function Orders() {
     }
 
     function renderOrderInformation() {
+        const grayRow = "bg-gray-100"
         if (!arrOfOrders[orderIndex]) {
             return null
         }
 
         return (
-            <div className="order absolute bg-gray-100 w-1/2 left-1/4 top-1/2 px-2 py-1 border-2 rounded-xl">
-                <div className="flex justify-end w-full text-xl">
+            <div className="order absolute w-1/2 left-1/4 top-1/2 border-2 rounded-xl bg-white">
+                <div className="flex justify-end w-full text-xl px-2.5 py-1">
                     <button className="" onClick={() => setOpen(false)}><FontAwesomeIcon icon={faXmark} /></button>
                 </div>
-                <table className="w-full">
-                    <tr>
-                        <td className={cellCSS}>ID</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].id}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>First name</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].firstName}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Second name</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].secondName}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Email</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].email}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Phone number</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].phoneNumber}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Apartment</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].date}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Country</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].country}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>City</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].city}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Adress</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].adress}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Apartment</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].apartment}</td>
-                    </tr>
-                    <tr>
-                        <td className={cellCSS}>Postal code</td>
-                        <td className={cellCSS}>{arrOfOrders[orderIndex].postalCode}</td>
-                    </tr>
-                </table>
-                <table className="w-full">
-                    <tr>
-                        <th className="text-start w-1/2 px-1">Item</th>
-                        <th className="text-start w-1/2 px-1">Qunatity</th>
-                    </tr>
-                    {arrOfOrders[orderIndex].items.map((element) => (
-                        <tr>
-                            <td className={cellCSS}>{element.name}</td>
-                            <td className={cellCSS}>{element.quantity}</td>
-                        </tr>
-                    ))}
-
-                </table>
+                <div className="w-full flex font-bold border border-t-2 rounded-t-xl border-b-0">
+                    <p className="text-start w-1/2 px-3 py-2">Label</p>
+                    <p className="text-start w-1/2 px-3 py-2">Value</p>
+                </div>
+                <div className="w-full border-b-2 rounded-b-xl">
+                    <div className={`flex ${grayRow}`}>
+                        <p className={cellCSS}>ID</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].id}</p>
+                    </div>
+                    <div className="flex">
+                        <p className={cellCSS}>First name</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].firstName}</p>
+                    </div>
+                    <div className={`flex ${grayRow}`}>
+                        <p className={cellCSS}>Second name</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].secondName}</p>
+                    </div>
+                    <div className="flex">
+                        <p className={cellCSS}>Email</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].email}</p>
+                    </div>
+                    <div className={`flex ${grayRow}`}>
+                        <p className={cellCSS}>Phone number</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].phoneNumber}</p>
+                    </div>
+                    <div className="flex">
+                        <p className={cellCSS}>Date</p>
+                        <p className={cellCSS}>{convertDate(arrOfOrders[orderIndex].date)}</p>
+                    </div>
+                    <div className={`flex ${grayRow}`}>
+                        <p className={cellCSS}>Country</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].country}</p>
+                    </div>
+                    <div className="flex">
+                        <p className={cellCSS}>City</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].city}</p>
+                    </div>
+                    <div className={`flex ${grayRow}`}>
+                        <p className={cellCSS}>Adress</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].adress}</p>
+                    </div>
+                    <div className="flex">
+                        <p className={cellCSS}>Apartment</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].apartment}</p>
+                    </div>
+                    <div className={`flex ${grayRow} rounded-b-xl`}>
+                        <p className={cellCSS}>Postal code</p>
+                        <p className={cellCSS}>{arrOfOrders[orderIndex].postalCode}</p>
+                    </div>
+                </div>
+                <div className="w-full flex font-bold border border-t-2 rounded-t-xl border-b-0 mt-8">
+                    <p className="text-start w-1/2 px-3 py-2">Item</p>
+                    <p className="text-start w-1/2 px-3 py-2">Qunatity</p>
+                </div>
+                {arrOfOrders[orderIndex].items.map((element, index) => (
+                    <div className={`flex w-full items-center ${index % 2 === 0 ? 'bg-gray-100' : ''} ${index === arrOfOrders[orderIndex].items.length - 1 ? 'rounded-b-xl' : ''}`} >
+                        <p className={`w-1/2 px-3 py-2`}>{element.name}</p>
+                        <p className={`w-1/2 px-3 py-2`}>{element.quantity}</p>
+                    </div>
+                ))}
             </div>
         );
     }
 
     const [isOpen, setOpen] = useState(false)
     const [orderIndex, setOrderIndex] = useState(0)
-    const cellCSS = "text-start px-1 py-1 w-1/2"
+    const cellCSS = "text-start px-3 py-2 w-1/2"
     const css = ['1/12', '3/12', '3/12', '3/12', '2/12']
 
     return (
@@ -185,7 +187,7 @@ function Orders() {
             </div>
             <div className="table-body border-2 rounded-b-xl">
                 {arrOfOrders.map((element, index) => (
-                    <div className={`flex items-center ${index % 2 === 0 ? 'bg-gray-100' : ''}`} >
+                    <div className={`flex w-full items-center ${index % 2 === 0 ? 'bg-gray-100' : ''} ${index === arrOfOrders.length - 1 ? 'rounded-b-xl' : ''}`} >
                         <p className={`w-${css[0]} px-3 `}>{element.id}</p>
                         <p className={`w-${css[1]} `}>{convertDate(element.date)}</p>
                         <p className={`w-${css[2]} `}>{`${element.secondName} ${element.firstName}`}</p>

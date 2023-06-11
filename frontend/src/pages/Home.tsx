@@ -11,7 +11,7 @@ function Home() {
 
     
     return (
-        <div className='py-36'>
+        <div className='pt-20'>
             <Carousel images={images} />
         </div>
     )

@@ -276,7 +276,7 @@ function Cart() {
     items = GetAllValuesInCookies()
     var navigate = useNavigate()
     return (
-        <div className="container mx-auto" id="cart">
+        <div className="container mx-auto xl:px-10" id="cart">
             <Breadcrumbs location={location} />
             <p className="text-4xl uppercase font-semibold text-purple-400 py-2">
                 Shopping cart

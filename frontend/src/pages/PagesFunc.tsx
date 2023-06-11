@@ -8,7 +8,6 @@ import { ConfectioneryType } from "../data/DataTypes"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { data } from 'jquery';
 
 
 
@@ -135,7 +134,7 @@ function Page(type: ConfectioneryType) {
     const [indexOfSort, setIndexOfSort] = useState(0)
 
     return (
-        <div className='body'>
+        <div className='body xl:px-10'>
             <div className="grid-cols-1 container mx-auto ">
                 <Breadcrumbs location={location} />
                 <h1 className="mb-6  text-3xl text-black">{type}</h1 >
