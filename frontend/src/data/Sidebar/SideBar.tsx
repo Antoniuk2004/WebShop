@@ -8,47 +8,23 @@ import { useEffect, useState } from "react"
 import { Confectionery } from "../Confectionery"
 
 
-function SideBar(products: Props, arrOfFilterTypes: Props, originalData:Array<Confectionery>) {
-    
+function SideBar(products: Props, arrOfFilterTypes: Props, originalData: Array<Confectionery>) {
+
 
     const [productsInDropdowns, setProductsInDropdowns] = useState(products.data)
+    const [leftVal, setLeftVal] = useState(0)
+    const [rightVal, setRightVal] = useState(25)
 
-    // function doFilter(dataValue: any, type: FilterType) {
-    //     var newArrOfFilterTypes: Array<any> = arrOfFilterTypes.data
-    //     if (Dropdown.checkVar) {
-    //         newArrOfFilterTypes.push([dataValue, type])
-    //         arrOfFilterTypes.set(newArrOfFilterTypes)
-    //         var newData = FilterData(products.data, arrOfFilterTypes)
-    //         products.set(newData)
-    //     }
-    //     else {
-    //         newArrOfFilterTypes = removeElement(newArrOfFilterTypes, dataValue)
-    //         var newData = FilterData(originalData, arrOfFilterTypes)
-    //         products.set(newData)
-    //     }
-    //     return null
-    // }
-
-    useEffect(() => { 
+    useEffect(() => {
         products.set(productsInDropdowns)
     }, [productsInDropdowns]);
 
+    useEffect(() => {
+        var newData = FilterData(originalData, arrOfFilterTypes, leftVal, rightVal)
+        setProductsInDropdowns(newData)
 
-    
+    }, [arrOfFilterTypes.data])
 
-
-
-
-
-    function removeElement(newArrOfFilterTypes: Array<any>, dataValue: any) {
-        newArrOfFilterTypes.forEach((element, index) => {
-            if (element[0] === dataValue) {
-                newArrOfFilterTypes.splice(index, 1)
-                // return newArrOfFilterTypes
-            }
-        })
-        return newArrOfFilterTypes
-    }
 
     const arrOfDropdowns = [
         Dropdown("Brand", FilterType.Brand, { data: productsInDropdowns, set: setProductsInDropdowns }, arrOfFilterTypes),
@@ -59,18 +35,12 @@ function SideBar(products: Props, arrOfFilterTypes: Props, originalData:Array<Co
     ]
 
     return (
-        // <div>
-        //     {productsInDropdowns.map((element: any) => (
-        //         <p>{element.name}</p>
-        //     ))}
-        //     <Slider data={originalData} set={setProductsInDropdowns} />
-        // </div>
         <div className="sidebar basis-1/6 text-sm">
             {arrOfDropdowns[0]}
             {arrOfDropdowns[1]}
             {arrOfDropdowns[2]}
             {arrOfDropdowns[3]}
-            {Slider(productsInDropdowns , setProductsInDropdowns, arrOfFilterTypes, originalData)}
+            {Slider(productsInDropdowns, setProductsInDropdowns, arrOfFilterTypes, originalData, { data: leftVal, set: setLeftVal }, { data: rightVal, set: setRightVal })}
             {arrOfDropdowns[4]}
         </div>
     )

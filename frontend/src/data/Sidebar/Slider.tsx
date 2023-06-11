@@ -1,23 +1,23 @@
 import { useState } from "react"
 import { Props } from "../DataTypes"
-import {arrOfChocolates} from "../Data"
+import { arrOfChocolates } from "../Data"
 import { Confectionery } from "../Confectionery"
+import { FilterData, usePriceFilter } from "./Filter"
 
 
-function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, originalData:Array<Confectionery>) {
+function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, originalData: Array<Confectionery>, leftValUseState : Props, rightValUseState: Props) {
     const max: number = 25
     const [leftInputVal, setLeftInputVal] = useState(0)
     const [rigthInputVal, setRigthInputVal] = useState(max)
-    const [leftVal, setLeftVal] = useState(leftInputVal)
-    const [rightVal, setRightVal] = useState(rigthInputVal)
+    
 
     function LeftInputValChange(event: any) {
         var value = Number(event.target.value)
-        if (value >= 0 && value < Number(rightVal)) setLeftVal(value)
+        if (value >= 0 && value < Number(rightValUseState.data)) leftValUseState.set(value)
     }
     function RigthInputValChange(event: any) {
         var value = Number(event.target.value)
-        if (value >= 0 && Number(leftVal) < value && value <= max) setRightVal(value)
+        if (value >= 0 && Number(leftValUseState.data) < value && value <= max) rightValUseState.set(value)
     }
 
 
@@ -26,22 +26,14 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
     }
 
 
-    function changePrice() {
-        const arrOfNewData = [];
-        if (originalData) {
-          for (let index = 0; index < originalData.length; index++) {
-            if (
-              originalData[index].price >= leftVal &&
-              originalData[index].price <= rightVal
-            ) {
-              arrOfNewData.push(originalData[index]);
-            }
-          }
-          set(arrOfNewData);
-        }
-      }
 
-    
+    function ChangePrice() {
+        var oldData: Array<Confectionery> = FilterData(originalData, arrOfFilters, leftValUseState.data, rightValUseState.data)
+        const arrOfNewData = usePriceFilter(oldData, leftValUseState.data, rightValUseState.data)
+        set(arrOfNewData);
+    }
+
+
     var inputCSS: string = "mt-1 block px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 w-1/3"
 
     return (
@@ -49,17 +41,17 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
             <div className="price-top flex items-center gap-2">
                 <input type="text"
                     id="left-input"
-                    value={leftVal}
+                    value={leftValUseState.data}
                     onChange={LeftInputValChange}
                     className={inputCSS} />
                 <span>—</span>
                 <input type="text"
                     id="right-input"
-                    value={rightVal}
+                    value={rightValUseState.data}
                     onChange={RigthInputValChange}
                     className={inputCSS} />
                 <button
-                    onClick={changePrice}
+                    onClick={ChangePrice}
                     className="rounded-full border-2 bg-white border-slate-300  px-5 py-2" >OK</button>
             </div>
             <div className="sliders_control relative mt-5" >
@@ -70,8 +62,8 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                     min="0"
                     max={max}
                     onChange={LeftInputValChange}
-                    style={getBackgroundSize(leftVal)}
-                    value={leftVal}
+                    style={getBackgroundSize(leftValUseState.data)}
+                    value={leftValUseState.data}
                 />
                 <input
                     id="rightSlider"
@@ -80,8 +72,8 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                     min="0"
                     max={max}
                     onChange={RigthInputValChange}
-                    style={getBackgroundSize(rightVal)}
-                    value={rightVal}
+                    style={getBackgroundSize(rightValUseState.data)}
+                    value={rightValUseState.data}
                 />
             </div>
         </div >

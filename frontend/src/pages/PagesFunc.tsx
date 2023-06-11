@@ -8,6 +8,7 @@ import { ConfectioneryType } from "../data/DataTypes"
 import { useLocation, useNavigate } from 'react-router-dom';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { data } from 'jquery';
 
 
 
@@ -68,13 +69,11 @@ function Page(type: ConfectioneryType) {
         />
     }
 
-
     function sortData(index: number) {
         setIndexOfSort(index)
         var newData = SortProducts(dataProp, index)
         setDataProp(newData)
     }
-
 
     function renderProducts() {
         return (
@@ -90,7 +89,6 @@ function Page(type: ConfectioneryType) {
             ))
         )
     }
-
 
     function handleDataChange(newData: Array<Confectionery>) {
         newData = SortProducts(newData, indexOfSort)
@@ -111,6 +109,7 @@ function Page(type: ConfectioneryType) {
     function renderFilters() {
         return (
             <div className="flex items-center gap-x-2 content-start basis-5/6">
+                <p>{dataProp.length}{dataProp.length === 1 ? ' product is selected' : ' products are selected'}</p>
                 <div
                     onClick={() => setArrOfFilterTypes([])}
                     className="flex items-center px-4 py-1 gap-x-2 border-2 border-red-500 rounded-full cursor-pointer hover:bg-red-500 hover:bg-opacity-10">

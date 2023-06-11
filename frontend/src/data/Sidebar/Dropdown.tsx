@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Confectionery } from "../Confectionery";
 import { FilterType, Props } from "../DataTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,11 +10,11 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
-    };
+    }
 
     useEffect(() => {
         let mapOfFilterTypes = new Map<string | number, number>();
-        var arr: (string | number | boolean)[][] = new Array
+        var arrLabelsToInput: (string | number | boolean)[][] = new Array
         switch (filterType) {
             case FilterType.Brand:
                 products.data.forEach((element: Confectionery, index: number) => {
@@ -26,8 +26,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                         mapOfFilterTypes.set(element.brand, 1)
                     }
                 })
-                arr = mergeArrays(mapOfFilterTypes)
-
+                arrLabelsToInput = mergeArrays(mapOfFilterTypes)
                 break;
             case FilterType.Country:
                 products.data.forEach((element: Confectionery, index: number) => {
@@ -39,7 +38,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                         mapOfFilterTypes.set(element.country, 1)
                     }
                 })
-                arr = mergeArrays(mapOfFilterTypes)
+                arrLabelsToInput = mergeArrays(mapOfFilterTypes)
                 break;
             case FilterType.Quantity:
                 products.data.forEach((element: Confectionery, index: number) => {
@@ -51,7 +50,7 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                         mapOfFilterTypes.set(element.packageQuantity, 1)
                     }
                 })
-                arr = mergeArrays(mapOfFilterTypes)
+                arrLabelsToInput = mergeArrays(mapOfFilterTypes)
                 break;
             case FilterType.Weigth:
                 products.data.forEach((element: Confectionery, index: number) => {
@@ -63,12 +62,12 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                         mapOfFilterTypes.set(element.weight, 1)
                     }
                 })
-                arr = mergeArrays(mapOfFilterTypes)
+                arrLabelsToInput = mergeArrays(mapOfFilterTypes)
                 break;
             case FilterType.Availability:
                 mapOfFilterTypes.set("In Stock", 0)
                 mapOfFilterTypes.set("Out of Stock", 0)
-                products.data.forEach((element: Confectionery, index: number) => {
+                products.data.forEach((element: Confectionery) => {
                     if (element.numberOfAvailableItems === 0) {
                         var num = mapOfFilterTypes.get("Out of Stock")
                         if (num !== undefined) mapOfFilterTypes.set("Out of Stock", num + 1)
@@ -82,12 +81,54 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                 if (num === 0) mapOfFilterTypes.delete("Out of Stock")
                 var num = mapOfFilterTypes.get("In Stock")
                 if (num === 0) mapOfFilterTypes.delete("In Stock")
-                arr = mergeArrays(mapOfFilterTypes)
+                arrLabelsToInput = mergeArrays(mapOfFilterTypes)
                 break;
         }
-        setArrOfLabels(sortArrOfLabels(arr));
-    }, [products.data, filterType]);
+        arrLabelsToInput = addFiltersToMap(arrLabelsToInput)
+        setArrOfLabels(sortArrOfLabels(arrLabelsToInput));
+    }, [products.data, filterType])
 
+    function addFiltersToMap(arrLabelsToInput: (string | number | boolean)[][]) {
+        arrOfFilterTypes.data.forEach((element: Array<any>) => {
+            if (filterType === element[1]) {
+                // console.log(element)
+                // console.log(arrLabelsToInput)
+                const index = findIndex(arrLabelsToInput, element[0])
+                console.log(index)
+                arrLabelsToInput[index][2] = true
+            }
+        })
+        return arrLabelsToInput
+    }
+
+    function findIndex(arrLabelsToInput: (string | number | boolean)[][], label:string){
+        var indexOfLabel = -1
+        arrLabelsToInput.forEach((element, index) => {
+            if(element[0] === label) indexOfLabel = index
+        })
+        return indexOfLabel
+    }
+
+    useEffect(() => {
+        if (arrOfFilterTypes.data.length > 0) {
+            changeCheckboxValue(true)
+        }
+    }, [arrOfFilterTypes.data])
+
+    function changeCheckboxValue(value: boolean) {
+        var oldArrOfLables = arrOfLabels
+        var newArrOfLables: Array<Array<any>> = []
+        arrOfFilterTypes.data.forEach((element: Array<any>) => {
+            if (filterType === element[1]) {
+                const index = findIndex(oldArrOfLables, element[0])
+                oldArrOfLables[index][2] = value
+            }
+        })
+        oldArrOfLables.forEach((element) => (
+            newArrOfLables.push(element)
+        ))
+        setArrOfLabels(newArrOfLables)
+    }
 
     function sortArrOfLabels(arr: (string | number | boolean)[][]) {
         for (let i = 0; i < arr.length - 1; i++) {
@@ -103,22 +144,37 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
     function mergeArrays(mapOfFilterTypes: Map<string | number | boolean, number>) {
         var keys = Array.from(mapOfFilterTypes.keys())
         var values = Array.from(mapOfFilterTypes.values())
-
         var arr = keys.map((item, index) => ([item, values[index], false]));
         return arr
     }
 
-    function changeArrOfFilterTypes(newFilterType: string | number){
+    function changeArrOfFilterTypes(newFilterValue: string | number, index: number) {
         var currentData = arrOfFilterTypes.data
         var newData = []
-        currentData.forEach((element: string | number) => {
-            newData.push(element)
-        }); 
-        newData.push(newFilterType)
-        console.log(newData)
+        if (!checkIfContains(currentData, newFilterValue)) {
+            currentData.forEach((element: string | number) => {
+                newData.push(element)
+            })
+            newData.push([newFilterValue, filterType, index])
+        }
+        else {
+            changeCheckboxValue(false)
+            currentData.forEach((element: Array<any>) => {
+
+                if (element[0] != newFilterValue)
+                    newData.push(element)
+            })
+        }
         arrOfFilterTypes.set(newData)
     }
 
+    function checkIfContains(currentData: Array<any>, newFilterValue: string | number) {
+        var contains = false
+        currentData.forEach(element => {
+            if (element[0] == newFilterValue) contains = true
+        })
+        return contains
+    }
 
     function renderMenu() {
         return (
@@ -126,21 +182,20 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
                 {arrOfLabels.map((element, index) => (
                     <button
                         className="flex gap-x-2 items-center w-full text-left py-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-                        onClick={() => changeArrOfFilterTypes(element[0])}
+                        onClick={() => changeArrOfFilterTypes(element[0], index)}
                     >
                         <input
                             type="checkbox"
                             className="form-checkbox cursor-pointer h-4 w-4 text-purple-500 ring-0 focus:ring-0 focus:ring-offset-0 rounded-sm"
                             onChange={() => null}
-                            checked={arrOfLabels[2]}
+                            checked={element[2]}
                         />
                         <label className="cursor-pointer">{`${element[0]}`}</label>
                         <p className="text-opacity-40 text-black">{`(${element[1]})`}</p>
                     </button>
                 ))}
-                <div className="py-1">{/* Rest of the code */}</div>
             </div>
-        );
+        )
     }
 
     return (
@@ -160,4 +215,4 @@ function Dropdown(label: string, filterType: FilterType, products: Props, arrOfF
     );
 }
 
-export default Dropdown;
+export default Dropdown

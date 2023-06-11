@@ -1,20 +1,8 @@
 import { Confectionery } from "../Confectionery"
 import { FilterType, Props, StockType } from "../DataTypes"
 
-class Filter {
-    type: FilterType
-    name: string
-
-    constructor(type: FilterType, name: string) {
-        this.type = type
-        this.name = name
-    }
-
-}
 
 
-
-var typeOfFirst: FilterType
 
 function UseOneFilter(products: Array<Confectionery>, dataValue: any, type: FilterType) {
     var newData: Array<Confectionery> = []
@@ -32,7 +20,8 @@ function UseOneFilter(products: Array<Confectionery>, dataValue: any, type: Filt
             var newData = products.filter((element) => element.weight === dataValue)
             break
         case FilterType.Availability:
-            if (dataValue === StockType.In) {
+            console.log(dataValue)
+            if (dataValue === "In Stock") {
                 newData = products.filter((element) => element.numberOfAvailableItems !== 0)
             }
             else {
@@ -43,11 +32,27 @@ function UseOneFilter(products: Array<Confectionery>, dataValue: any, type: Filt
     return newData
 }
 
-function FilterData(products: Array<Confectionery>, arrOfFilterTypes: Props) {
+
+function usePriceFilter(oldData: Array<Confectionery>, leftVal: number, rightVal: number){
+    const arrOfNewData = [];
+    for (let index = 0; index < oldData.length; index++) {
+        if (
+            oldData[index].price >= leftVal &&
+            oldData[index].price <= rightVal
+        ) {
+            arrOfNewData.push(oldData[index]);
+        }
+    }
+    return arrOfNewData
+}
+
+
+function FilterData(products: Array<Confectionery>, arrOfFilterTypes: Props, leftVal: number, rightVal:number) {
     arrOfFilterTypes.data.forEach((element: any, index: number) => {
         products = UseOneFilter(products, element[0], element[1])
     })
-    return products
+    return usePriceFilter(products, leftVal, rightVal)
 }
 
-export { FilterData, Filter, FilterType, StockType }
+export { FilterData, FilterType, StockType, usePriceFilter }
+
