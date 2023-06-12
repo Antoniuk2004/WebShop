@@ -1,19 +1,20 @@
-
 import Dropdown from "./Dropdown"
 import { FilterData, FilterType, StockType } from "./Filter"
 import Slider from "./Slider"
 import { Props } from "../DataTypes"
 import { useEffect, useState } from "react"
 import { Confectionery } from "../Confectionery"
+import { findMaxPrice, findMinPrice } from "./FindValues"
 
-// filter-brand=name;country=name
 
 function SideBar(products: Props, arrOfFilterTypes: Props, originalData: Array<Confectionery>) {
 
 
     const [productsInDropdowns, setProductsInDropdowns] = useState(products.data)
-    const [leftVal, setLeftVal] = useState(0)
-    const [rightVal, setRightVal] = useState(25)
+    const [leftVal, setLeftVal] = useState(findMinPrice(originalData))
+    const [rightVal, setRightVal] = useState(findMaxPrice(originalData))
+
+    
 
     useEffect(() => {
         products.set(productsInDropdowns)
@@ -24,7 +25,7 @@ function SideBar(products: Props, arrOfFilterTypes: Props, originalData: Array<C
         setProductsInDropdowns(newData)
 
     }, [arrOfFilterTypes.data])
-    
+
 
     return (
         <div className="sidebar basis-1/6 text-sm">

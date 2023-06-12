@@ -1,17 +1,17 @@
 class Order {
-    id: number
-    date: number
-    price: number
-    firstName: string
-    secondName: string
-    phoneNumber: number
-    adress: string
-    apartment: string
-    city: string
-    postalCode: number
-    email: string
-    country: string
-    items: Array<Item>
+    public id: number
+    public date: number
+    public price: number
+    public firstName: string
+    public secondName: string
+    public phoneNumber: number
+    public adress: string
+    public apartment: string
+    public city: string
+    public postalCode: number
+    public email: string
+    public country: string
+    public items: Array<Item>
 
     constructor(id:number, date:number, price:number, firstName: string, secondName: string, phoneNumber: number,
         adress: string, apartment: string, city: string, postalCode: number,

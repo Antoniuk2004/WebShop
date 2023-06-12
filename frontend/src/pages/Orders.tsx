@@ -188,11 +188,11 @@ function Orders() {
             <div className="table-body border-2 rounded-b-xl">
                 {arrOfOrders.map((element, index) => (
                     <div className={`flex w-full items-center ${index % 2 === 0 ? 'bg-gray-100' : ''} ${index === arrOfOrders.length - 1 ? 'rounded-b-xl' : ''}`} >
-                        <p className={`w-${css[0]} px-3 `}>{element.id}</p>
-                        <p className={`w-${css[1]} `}>{convertDate(element.date)}</p>
-                        <p className={`w-${css[2]} `}>{`${element.secondName} ${element.firstName}`}</p>
-                        <p className={`w-${css[3]} `}>${element.price}</p>
-                        <p className={`cursor-pointer w-${css[4]} `}>
+                        <p className={`w-1/12 px-3 `}>{element.id}</p>
+                        <p className={`w-3/12 `}>{convertDate(element.date)}</p>
+                        <p className={`w-3/12 `}>{`${element.secondName} ${element.firstName}`}</p>
+                        <p className={`w-3/12 `}>${element.price}</p>
+                        <p className={`cursor-pointer w-2/12 `}>
                             <button
                                 className="bg-purple-400 rounded-md px-2 py-1 m-1 text-white hover:bg-purple-500"
                                 onClick={() => TurnOnOrderInformationRender(index)}>view

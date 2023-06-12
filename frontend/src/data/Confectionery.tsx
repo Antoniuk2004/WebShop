@@ -1,17 +1,15 @@
-import { count } from "console"
-
 class Confectionery {
-    name: string
-    weight: number
-    image: string
-    packageQuantity: number
-    description: string
-    price: number
-    brand: string
-    numberOfSoldItems: number
-    country: string
-    numberOfAvailableItems: number
-    ingredients: string
+    public name: string
+    public weight: number
+    public image: string
+    public packageQuantity: number
+    public description: string
+    public price: number
+    public brand: string
+    public numberOfSoldItems: number
+    public country: string
+    public numberOfAvailableItems: number
+    public ingredients: string
 
     constructor(name: string, weight: number, image: string,
         packageQuantity: number, description: string, price: number, 
@@ -40,10 +38,13 @@ class Cookies extends Confectionery {
 class Biscuits extends Confectionery {
 
 }
+
 class Candies extends Confectionery {
-}
-class Cakes extends Confectionery {
+
 }
 
+class Cakes extends Confectionery {
+
+}
 
 export {Chocolate, Cookies, Biscuits, Candies, Cakes, Confectionery}

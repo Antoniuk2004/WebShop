@@ -3,11 +3,13 @@ import { Props } from "../DataTypes"
 import { arrOfChocolates } from "../Data"
 import { Confectionery } from "../Confectionery"
 import { FilterData, usePriceFilter } from "./Filter"
+import { findMaxPrice, findMinPrice } from "./FindValues"
 
 
 function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, originalData: Array<Confectionery>, leftValUseState : Props, rightValUseState: Props) {
-    const max: number = 25
-    const [leftInputVal, setLeftInputVal] = useState(0)
+    const max: number = findMaxPrice(originalData)
+    const min: number = findMinPrice(originalData)
+    const [leftInputVal, setLeftInputVal] = useState(min)
     const [rigthInputVal, setRigthInputVal] = useState(max)
     
 
@@ -59,7 +61,7 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                     id="leftSlider"
                     className="leftSlider slider w-full"
                     type="range"
-                    min="0"
+                    min={min}
                     max={max}
                     onChange={LeftInputValChange}
                     style={getBackgroundSize(leftValUseState.data)}
@@ -69,7 +71,7 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                     id="rightSlider"
                     className="rightSlider slider w-full"
                     type="range"
-                    min="0"
+                    min={min}
                     max={max}
                     onChange={RigthInputValChange}
                     style={getBackgroundSize(rightValUseState.data)}

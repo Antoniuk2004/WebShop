@@ -53,10 +53,6 @@ function CurrentPageLink() {
         return list
     }
 
-    function Redirect(value: string, navigate: NavigateFunction) {
-        navigate(`${value}`.toLowerCase())
-    }
-
     function FormatText(text: string) {
         var firstLetter = text[0]
         if (text !== null) {
@@ -69,13 +65,13 @@ function CurrentPageLink() {
     function GetCharacteristics(product: Confectionery) {
         navigate = useNavigate()
         var titleClassName = "text-black opacity-75 text-lg font-sans font-light"
-        var elemClassName = titleClassName + " text-purple-500 hover:text-purple-700 cursor-pointer"
+        var elemClassName = titleClassName + " text-purple-500"
         return (
             <table className="w-full table-auto py-2">
                 <tbody>
                     <tr>
                         <td className={titleClassName}>Type</td>
-                        <a onClick={() => Redirect(typeOfProduct, navigate)} className={elemClassName}>{FormatText(typeOfProduct)}</a>
+                        <a className={elemClassName}>{FormatText(typeOfProduct)}</a>
                     </tr>
                     <tr>
                         <td className={titleClassName}>Brand</td>
