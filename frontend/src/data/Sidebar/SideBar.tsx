@@ -8,22 +8,17 @@ import { findMaxPrice, findMinPrice } from "./FindValues"
 
 
 function SideBar(products: Props, arrOfFilterTypes: Props, originalData: Array<Confectionery>) {
-
-
     const [productsInDropdowns, setProductsInDropdowns] = useState(products.data)
     const [leftVal, setLeftVal] = useState(findMinPrice(originalData))
-    const [rightVal, setRightVal] = useState(findMaxPrice(originalData))
-
-    
+    const [rightVal, setRightVal] = useState(findMaxPrice(originalData))    
 
     useEffect(() => {
         products.set(productsInDropdowns)
-    }, [productsInDropdowns]);
+    }, [productsInDropdowns])
 
     useEffect(() => {
         var newData = FilterData(originalData, arrOfFilterTypes, leftVal, rightVal)
         setProductsInDropdowns(newData)
-
     }, [arrOfFilterTypes.data])
 
 

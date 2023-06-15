@@ -12,7 +12,7 @@ function SortProducts(data: Array<Confectionery>, indexOfSort: number) {
 function Sort(data: Array<Confectionery>, indexOfSort: number) {
   switch (indexOfSort) {
     case 0:
-      return SortBySelling(data)
+      return sortBySelling(data)
     case 1:
       data = SortByName(data)
       return data
@@ -20,9 +20,9 @@ function Sort(data: Array<Confectionery>, indexOfSort: number) {
       data = SortByName(data)
       return reverseArr(data)
     case 3:
-      return SortByPrice(data)
+      return sortByPrice(data)
     default:
-      data = SortByPrice(data)
+      data = sortByPrice(data)
       data = reverseArr(data)
       return data
   }
@@ -54,7 +54,7 @@ function SortByName(data: Array<Confectionery>): Array<Confectionery> {
 }
 
 
-function SortByPrice(data: Array<Confectionery>): Array<Confectionery> {
+function sortByPrice(data: Array<Confectionery>): Array<Confectionery> {
   const len = data.length
   var newData: Array<Confectionery> = []
   for (let i = 0; i < len - 1; i++) {
@@ -70,7 +70,7 @@ function SortByPrice(data: Array<Confectionery>): Array<Confectionery> {
   return newData
 }
 
-function SortBySelling(data: Array<Confectionery>): Array<Confectionery> {
+function sortBySelling(data: Array<Confectionery>): Array<Confectionery> {
   const len = data.length;
   var newData: Array<Confectionery> = []
   for (let i = 0; i < len - 1; i++) {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Props } from "./DataTypes";
 
-function ApiRequest({data: dataProp, set: onDataChange}: Props, endPoint: string) {
+function APIRequest({data: dataProp, set: onDataChange}: Props, endPoint: string) {
     async function getData(endPoint: string): Promise<any> {
         try {
             const response = await fetch(`http://localhost:8800/api/${endPoint}`);
@@ -37,4 +37,4 @@ function ApiRequest({data: dataProp, set: onDataChange}: Props, endPoint: string
     }, []);
 }
 
-export default ApiRequest
+export default APIRequest

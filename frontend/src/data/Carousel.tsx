@@ -13,7 +13,7 @@ function Carousel({ images }: CarouselProps) {
   const [index, setIndex] = useState(0)
   const [img, useImg] = useState(images[index])
 
-  function PrevImage() {
+  function SetPrevImage() {
     var prev: number = Number(index - 1)
     if (prev < 0)
       prev = images.length - 1
@@ -21,7 +21,7 @@ function Carousel({ images }: CarouselProps) {
     useImg(images[prev])
   }
 
-  function NextImage() {
+  function SetNextImage() {
     var next: number = Number(index + 1)
     if (next > images.length - 1)
       next = 0
@@ -43,7 +43,7 @@ function Carousel({ images }: CarouselProps) {
         <button className="basis-1/3 flex justify-start">
           <FontAwesomeIcon
             className='h-10 opacity-30'
-            onClick={PrevImage}
+            onClick={SetPrevImage}
             icon={faCircleChevronLeft} />
         </button>
         <div className='dots basis-1/3 flex justify-center items-center gap-5'>
@@ -57,7 +57,7 @@ function Carousel({ images }: CarouselProps) {
         <button className="basis-1/3 flex justify-end">
           <FontAwesomeIcon
             className='h-10 opacity-30 pointer'
-            onClick={NextImage}
+            onClick={SetNextImage}
             icon={faCircleChevronRight} />
         </button>
       </div>

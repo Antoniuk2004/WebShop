@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { Order } from "../data/Order"
-import ApiRequest from "../data/API"
+import APIRequest from "../data/API"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Arrow } from "../data/DataTypes";
 
 function Orders() {
-    const [arrOfOrders, setArrOfOrders] = useState(new Array<Order>);
+    const [arrOfOrders, setArrOfOrders] = useState(new Array<Order>)
     const arrOfTitles = ['Order ID', 'Date', 'Name', 'Total']
 
-    ApiRequest({ data: arrOfOrders, set: setArrOfOrders }, "data")
+    APIRequest({ data: arrOfOrders, set: setArrOfOrders }, "data")
 
     function convertDate(currentTimeStamp: number) {
         const currentDate = new Date(currentTimeStamp)
@@ -19,7 +19,7 @@ function Orders() {
         const hours: number = currentDate.getHours()
         const minutes: number = currentDate.getMinutes()
         const convertedDate = `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day} 
-        ${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+        ${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`
         return convertedDate
     }
 
@@ -44,7 +44,7 @@ function Orders() {
     function changeArrowValueAndReverseValue(index: number) {
         const newArr: Array<any> = []
         for (let indexOfOldArr = 0; indexOfOldArr < arrOfArrowValueAndReverseValue.length; indexOfOldArr++) {
-            if (indexOfOldArr == index) {
+            if (indexOfOldArr === index) {
                 const reverseValue = !arrOfArrowValueAndReverseValue[index][1]
                 var arrowValue: Arrow
                 if (arrOfArrowValueAndReverseValue[index][0] === Arrow.Down) arrowValue = Arrow.Up
@@ -203,7 +203,7 @@ function Orders() {
             </div>
 
         </div>
-    );
+    )
 }
 
-export default Orders;
+export default Orders

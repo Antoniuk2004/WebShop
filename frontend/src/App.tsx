@@ -23,20 +23,20 @@ function HeaderWithLocation() {
   var navbar = document.getElementById("navbar")
 
 
-  function Changebackground(style: string) {
+  function changebackground(style: string) {
     var body = document.getElementById("body")
     if (body) body.style.backgroundImage = style
   }
 
-  if (location.pathname == "/") Changebackground("linear-gradient(to top, rgba(255,0,0,0), rgba(237,221,253))")
-  else Changebackground("none")
+  if (location.pathname == "/") changebackground("linear-gradient(to top, rgba(255,0,0,0), rgba(237,221,253))")
+  else changebackground("none")
 
 
   if (header && navbar) {
     if (hideHeader) {
       header.style.display = "none"
       navbar.style.display = "none"
-      return CheckoutHeader(navigate)
+      return checkoutHeader(navigate)
     }
     else {
       header.style.display = ""
@@ -48,7 +48,7 @@ function HeaderWithLocation() {
 }
 
 
-function CheckoutHeader(navigate: NavigateFunction) {
+function checkoutHeader(navigate: NavigateFunction) {
   return (
     <div className="container mx-auto text-2xl py-4 text-purple-400 px-10">
       <p className="logo cursor-pointer" onClick={() => navigate("/")}>World Of Sweets</p>

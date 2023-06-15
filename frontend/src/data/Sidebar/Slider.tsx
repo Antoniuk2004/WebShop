@@ -12,29 +12,25 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
     const [leftInputVal, setLeftInputVal] = useState(min)
     const [rigthInputVal, setRigthInputVal] = useState(max)
     
-
-    function LeftInputValChange(event: any) {
+    function changeLeftInputVal(event: any) {
         var value = Number(event.target.value)
         if (value >= 0 && value < Number(rightValUseState.data)) leftValUseState.set(value)
     }
-    function RigthInputValChange(event: any) {
+
+    function changeRigthInputVal(event: any) {
         var value = Number(event.target.value)
         if (value >= 0 && Number(leftValUseState.data) < value && value <= max) rightValUseState.set(value)
     }
 
-
     function getBackgroundSize(inputVal: number) {
         return { backgroundSize: `${(inputVal * 100) / max}% 100%` }
     }
-
-
 
     function ChangePrice() {
         var oldData: Array<Confectionery> = FilterData(originalData, arrOfFilters, leftValUseState.data, rightValUseState.data)
         const arrOfNewData = usePriceFilter(oldData, leftValUseState.data, rightValUseState.data)
         set(arrOfNewData);
     }
-
 
     var inputCSS: string = "mt-1 block px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 w-1/3"
 
@@ -44,13 +40,13 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                 <input type="text"
                     id="left-input"
                     value={leftValUseState.data}
-                    onChange={LeftInputValChange}
+                    onChange={changeLeftInputVal}
                     className={inputCSS} />
                 <span>—</span>
                 <input type="text"
                     id="right-input"
                     value={rightValUseState.data}
-                    onChange={RigthInputValChange}
+                    onChange={changeRigthInputVal}
                     className={inputCSS} />
                 <button
                     onClick={ChangePrice}
@@ -63,7 +59,7 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                     type="range"
                     min={min}
                     max={max}
-                    onChange={LeftInputValChange}
+                    onChange={changeLeftInputVal}
                     style={getBackgroundSize(leftValUseState.data)}
                     value={leftValUseState.data}
                 />
@@ -73,7 +69,7 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
                     type="range"
                     min={min}
                     max={max}
-                    onChange={RigthInputValChange}
+                    onChange={changeRigthInputVal}
                     style={getBackgroundSize(rightValUseState.data)}
                     value={rightValUseState.data}
                 />
@@ -81,5 +77,4 @@ function Slider(dataProp: any, set: (data: any) => void, arrOfFilters: Props, or
         </div >
     )
 }
-
 export default Slider

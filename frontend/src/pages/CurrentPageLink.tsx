@@ -9,7 +9,7 @@ import Navbar from "../Navbar";
 import Cookies from 'js-cookie';
 
 function CurrentPageLink() {
-    function GetArrOfProductsOrMatchBoolean(value: string): { arrayOfProducts: Array<Confectionery>, matched: boolean } {
+    function getArrOfProductsOrMatchBoolean(value: string): { arrayOfProducts: Array<Confectionery>, matched: boolean } {
         var arrayOfProducts: Array<Confectionery> = []
         var matched = false
         switch (value.toLowerCase()) {
@@ -47,13 +47,13 @@ function CurrentPageLink() {
         return { arrayOfProducts, matched }
     }
 
-    function FormatIngredientsList(path: string) {
+    function formatIngredientsList(path: string) {
         var list: string = GetData(path).toLowerCase()
         list = list.replace(list.charAt(0), list.charAt(0).toUpperCase())
         return list
     }
 
-    function FormatText(text: string) {
+    function formatText(text: string) {
         var firstLetter = text[0]
         if (text !== null) {
             firstLetter = firstLetter.toUpperCase()
@@ -71,7 +71,7 @@ function CurrentPageLink() {
                 <tbody>
                     <tr>
                         <td className={titleClassName}>Type</td>
-                        <a className={elemClassName}>{FormatText(typeOfProduct)}</a>
+                        <a className={elemClassName}>{formatText(typeOfProduct)}</a>
                     </tr>
                     <tr>
                         <td className={titleClassName}>Brand</td>
@@ -94,7 +94,7 @@ function CurrentPageLink() {
         )
     }
 
-    function UpdateNumberOfProductsInCart() {
+    function updateNumberOfProductsInCart() {
         var numOfProducts = document.getElementById("num-of-products")
         if (numOfProducts) {
             var prevNum = Number(numOfProducts.textContent)
@@ -107,7 +107,7 @@ function CurrentPageLink() {
         }
     }
 
-    function MakeButton(product: Confectionery, productName: String) {
+    function makeButton(product: Confectionery, productName: String) {
         var arrOfCookies = document.cookie.split("; ")
         var buttonCSS = "btn bg-purple-400 hover:bg-purple-500 w-full transition duration-300 rounded-xl text-2xl py-3 my-2 text-white"
         for (let i = 0; i < arrOfCookies.length; i++) {
@@ -128,7 +128,7 @@ function CurrentPageLink() {
                     id="btn"
                     onClick={() => {
                         Cookies.set(productName, `${typeOfProduct}=1`)
-                        UpdateNumberOfProductsInCart()
+                        updateNumberOfProductsInCart()
                     }
                     }
                     className={buttonCSS}>Add to Cart</button>
@@ -141,7 +141,7 @@ function CurrentPageLink() {
         }
     }
 
-    function RenderProductPage(product: Confectionery, productName: String) {
+    function renderProductPage(product: Confectionery, productName: String) {
         return (
             <div className="web-page">
                 <Navbar />
@@ -159,12 +159,12 @@ function CurrentPageLink() {
                             <p className="py-3 text-2xl text-black opacity-75 ">Description</p>
                             <p className="list-of-ingredients text-black opacity-75 text-lg font-sans font-light py-2 text-justify">{GetData(product.description)}</p>
                             <p className="py-3 text-2xl text-black opacity-75 ">Ingredients</p>
-                            <p className="list-of-ingredients text-black opacity-75 text-lg font-sans font-light py-2 text-justify">{FormatIngredientsList(product.ingredients)}</p>
+                            <p className="list-of-ingredients text-black opacity-75 text-lg font-sans font-light py-2 text-justify">{formatIngredientsList(product.ingredients)}</p>
                             <p className="py-3 text-2xl text-black opacity-75 ">Characteristics</p>
                             <div className="product-properties py-2 flex">
                                 {GetCharacteristics(product)}
                             </div>
-                            {MakeButton(product, productName)}
+                            {makeButton(product, productName)}
                         </div>
                     </div>
                 </div>
@@ -181,12 +181,12 @@ function CurrentPageLink() {
     var typeOfProduct = currentPageLink.substring(firstIndex + 1, lastIndex)
     var navigate: NavigateFunction
 
-    const { arrayOfProducts }: any = GetArrOfProductsOrMatchBoolean(typeOfProduct)
-    const { matched } = GetArrOfProductsOrMatchBoolean(productName)
+    const { arrayOfProducts }: any = getArrOfProductsOrMatchBoolean(typeOfProduct)
+    const { matched } = getArrOfProductsOrMatchBoolean(productName)
 
     for (let index = 0; index < arrayOfProducts.length; index++) {
         var formatedName = arrayOfProducts[index].name.toLocaleLowerCase().replaceAll(" ", "_")
-        if (formatedName === productName) return RenderProductPage(arrayOfProducts[index], productName)
+        if (formatedName === productName) return renderProductPage(arrayOfProducts[index], productName)
     }
 
     if (!matched) return (<WrongPage />)

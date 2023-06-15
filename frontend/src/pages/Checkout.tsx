@@ -5,8 +5,8 @@ import { Order, Item } from "../data/Order"
 import { arrOfChocolates, arrOfCookies, arrOfBuiscuits, arrOfCandies, arrOfCakes } from "../data/Data"
 import { ConfectioneryType } from "../data/DataTypes"
 import { Confectionery } from "../data/Confectionery"
-import { Navigate, useNavigate } from "react-router"
-import ApiRequest from "../data/API"
+import { useNavigate } from "react-router"
+import APIRequest from "../data/API"
 
 function Checkout() {
     var correctInputCSS = "input h-[52px] flex justify-between w-full rounded-lg border border-neutral-500 px-3 text-black text-opacity-70 rounded-lg w-full text-black text-opacity-70 border-2 focus:outline-none focus:ring-0 focus:border-purple-400"
@@ -169,7 +169,6 @@ function Checkout() {
 
 
     function renderProducts() {
-
         return (
             <div className="list-of-products">
                 {arrOfConfectioneries.map((element, index) => (
@@ -258,7 +257,7 @@ function Checkout() {
 
     const [numOfOrders, setNumOfOrders] = useState(0);
 
-    ApiRequest({ data: numOfOrders, set: setNumOfOrders }, "numberOfOrders")
+    APIRequest({ data: numOfOrders, set: setNumOfOrders }, "numberOfOrders")
 
 
     var arrOfFormatedCookies = getArrOfCookies()

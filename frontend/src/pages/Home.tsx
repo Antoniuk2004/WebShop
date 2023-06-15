@@ -8,7 +8,6 @@ function Home() {
         "/images/slide2.png",
         "/images/slide3.png",
     ]
-
     
     return (
         <div className='pt-20'>
